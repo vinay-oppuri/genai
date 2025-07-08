@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { VideoIcon, BotIcon, StarIcon } from "lucide-react"
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
-import { Separator } from "@radix-ui/react-select"
+import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
 
@@ -32,7 +32,7 @@ export const DashboardSidebar = () => {
                 </Link>
             </SidebarHeader>
             <div>
-                <Separator className="opacity-100 text-[#5D6B68]" />
+                <Separator className="opacity-10 text-[#5D6B6A]" />
             </div>
 
             <SidebarContent>
@@ -60,7 +60,9 @@ export const DashboardSidebar = () => {
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
-                        {/* Separator */}
+                <div>
+                    <Separator className="opacity-10 text-[#5D6B6A]" />
+                </div>
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu>
@@ -88,7 +90,7 @@ export const DashboardSidebar = () => {
             </SidebarContent>
 
             <SidebarFooter className="text-white">
-                <DashboardUserButton/>
+                <DashboardUserButton />
             </SidebarFooter>
         </Sidebar>
     )
