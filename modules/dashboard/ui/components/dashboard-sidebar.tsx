@@ -6,20 +6,22 @@ import { usePathname } from "next/navigation"
 
 import { VideoIcon, BotIcon, StarIcon } from "lucide-react"
 
-import { Sidebar, 
-    SidebarContent, 
-    SidebarFooter, 
-    SidebarGroup, 
-    SidebarGroupContent, 
-    SidebarHeader, 
-    SidebarMenu, 
-    SidebarMenuButton, 
-    SidebarMenuItem 
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    useSidebar
 } from "@/components/ui/sidebar"
 
-import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
+import { useState } from "react"
 
 const firstSection = [
     { icon: VideoIcon, label: "Meetings", href: "/meetings" },
@@ -32,11 +34,18 @@ const secondSection = [
 
 export const DashboardSidebar = () => {
     const pathname = usePathname()
+    const { isMobile, setOpenMobile } = useSidebar()
 
     return (
         <Sidebar>
             <SidebarHeader className="flex items-center text-sidebar-accent-foreground mr-5">
-                <Link href="/" className="flex items-center gap-2 px-2 pt-2">
+                <Link
+                    href="/"
+                    className="flex items-center gap-2 px-2 pt-2"
+                    onClick={() => {
+                        if (isMobile) setOpenMobile(false)
+                    }}
+                >
                     <Image src="/logo.svg" height={36} width={36} alt="Meet.AI" />
                     <p className="text-2xl font-semibold">Meet.AI</p>
                 </Link>
@@ -52,11 +61,15 @@ export const DashboardSidebar = () => {
                                     <SidebarMenuButton asChild
                                         className={cn(
                                             "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
-                                            pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]"
+                                            pathname === item.href && "bg-linear-to-r/oklch"
                                         )}
                                         isActive={pathname === item.href}
                                     >
-                                        <Link href={item.href}>
+                                        <Link href={item.href}
+                                            onClick={() => {
+                                                if (isMobile) setOpenMobile(false)
+                                            }}
+                                        >
                                             <item.icon className="size-5" />
                                             <span>
                                                 {item.label}
@@ -77,7 +90,7 @@ export const DashboardSidebar = () => {
                                     <SidebarMenuButton asChild
                                         className={cn(
                                             "h-10 hover:bg-linear-to-r/oklch border border-transparent hover:border-[#5D6B68]/10 from-sidebar-accent from-5% via-30% via-sidebar/50 to-sidebar/50",
-                                            pathname === item.href && "bg-linear-to-r/oklch border-[#5D6B68]"
+                                            pathname === item.href && "bg-linear-to-r/oklchx`"
                                         )}
                                         isActive={pathname === item.href}
                                     >
