@@ -6,7 +6,17 @@ import { usePathname } from "next/navigation"
 
 import { VideoIcon, BotIcon, StarIcon } from "lucide-react"
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
+import { Sidebar, 
+    SidebarContent, 
+    SidebarFooter, 
+    SidebarGroup, 
+    SidebarGroupContent, 
+    SidebarHeader, 
+    SidebarMenu, 
+    SidebarMenuButton, 
+    SidebarMenuItem 
+} from "@/components/ui/sidebar"
+
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
@@ -25,15 +35,13 @@ export const DashboardSidebar = () => {
 
     return (
         <Sidebar>
-            <SidebarHeader className="text-sidebar-accent-foreground">
+            <SidebarHeader className="flex items-center text-sidebar-accent-foreground mr-5">
                 <Link href="/" className="flex items-center gap-2 px-2 pt-2">
                     <Image src="/logo.svg" height={36} width={36} alt="Meet.AI" />
                     <p className="text-2xl font-semibold">Meet.AI</p>
                 </Link>
             </SidebarHeader>
-            <div>
-                <Separator className="opacity-10 text-[#5D6B6A]" />
-            </div>
+            <br />
 
             <SidebarContent>
                 <SidebarGroup>
@@ -60,9 +68,7 @@ export const DashboardSidebar = () => {
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
-                <div>
-                    <Separator className="opacity-10 text-[#5D6B6A]" />
-                </div>
+                <br />
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu>
