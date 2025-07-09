@@ -43,10 +43,10 @@ export const ResponsiveDialog = ({
                         <DrawerTitle>{title}</DrawerTitle>
                         <DrawerDescription>{description}</DrawerDescription>
                     </DrawerHeader>
+                    <div className="p-4">
+                        {children}
+                    </div>
                 </DrawerContent>
-                <div className="p-4">
-                    {children}
-                </div>
             </Drawer>
         )
     }

@@ -1,6 +1,7 @@
 "use client"
 
 import { ResponsiveDialog } from "@/components/responsive-dialog"
+import { Button } from "@/components/ui/button"
 
 interface NewAgentDialogProps {
     open: boolean
@@ -19,7 +20,7 @@ export const NewAgentDialog = ({
             open={open}
             onOpenChange={onOpenChange}
         >
-            new agent form
+            <Button className="w-full">Some Action</Button>
         </ResponsiveDialog>
     )
 }
