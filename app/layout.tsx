@@ -4,7 +4,7 @@ import "./globals.css";
 
 import { TRPCReactProvider } from "@/trpc/client";
 
-import { Toaster, toast } from 'sonner'
+import { Toaster } from 'sonner'
 
 const inter = Inter({
   subsets: ["latin"],
