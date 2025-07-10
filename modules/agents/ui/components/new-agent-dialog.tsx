@@ -2,6 +2,7 @@
 
 import { ResponsiveDialog } from "@/components/responsive-dialog"
 import { Button } from "@/components/ui/button"
+import { AgentForm } from "./agent-form"
 
 interface NewAgentDialogProps {
     open: boolean
@@ -20,7 +21,10 @@ export const NewAgentDialog = ({
             open={open}
             onOpenChange={onOpenChange}
         >
-            <Button className="w-full">Some Action</Button>
+            <AgentForm
+                onSuccess={ () => onOpenChange(false)}
+                onCancel={ () => onOpenChange(false)}
+            />
         </ResponsiveDialog>
     )
 }
