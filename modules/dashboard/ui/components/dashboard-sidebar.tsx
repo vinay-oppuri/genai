@@ -21,11 +21,10 @@ import {
 
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
-import { useState } from "react"
 
 const firstSection = [
-    { icon: VideoIcon, label: "Meetings", href: "/meetings" },
-    { icon: BotIcon, label: "Agents", href: "/agents" }
+    { icon: VideoIcon, label: "Meetings", href: "/dashboard/meetings" },
+    { icon: BotIcon, label: "Agents", href: "/dashboard/agents" }
 ]
 
 const secondSection = [
