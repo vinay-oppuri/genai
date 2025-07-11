@@ -1,7 +1,6 @@
 "use client"
 
 import { ResponsiveDialog } from "@/components/responsive-dialog"
-import { Button } from "@/components/ui/button"
 import { AgentForm } from "./agent-form"
 
 interface NewAgentDialogProps {
