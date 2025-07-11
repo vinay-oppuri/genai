@@ -149,7 +149,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: MeetingFormP
                                     />
                                 </FormControl>
                                 <FormDescription>
-                                    Not found what you&apos;re looking for {' '}
+                                    Not found what you&apos;re looking for? {' '}
                                     <button
                                         type="button"
                                         className="text-primary hover:underline"
