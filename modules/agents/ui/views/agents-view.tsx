@@ -27,7 +27,7 @@ export const AgentsView = () => {
             <DataTable
                 data={data.items}
                 columns={columns}
-                onRowClick={(row) => router.push(`/agents/${row.id}`)}
+                onRowClick={(row) => router.push(`/dashboard/agents/${row.id}`)}
             />
             <DataPagination
                 page={filters.page}
