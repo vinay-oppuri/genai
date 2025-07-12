@@ -50,15 +50,15 @@ export default function HomeView() {
 
 
       {/* Hero Section */}
-      <main className="flex-1 flex items-center justify-center px-3 md:px-6 py-20">
+      <main className="flex-1 flex items-center justify-center px-4 md:px-6 md:py-20">
         <section className={cn(
-          "max-w-3xl text-center space-y-8 p-8 rounded-xl shadow-xl",
+          "max-w-3xl text-center space-y-8 p-6 rounded-xl shadow-xl",
           "bg-white/30 dark:bg-black/20 backdrop-blur-lg border border-white/20 dark:border-white/10"
         )}>
-          <h2 className="text-5xl sm:text-6xl font-extrabold leading-tight tracking-tight">
+          <h2 className="text-4xl sm:text-6xl font-extrabold leading-tight tracking-tight">
             Run Smarter Meetings with <span className="text-primary">AI Agents</span>
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-md sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
