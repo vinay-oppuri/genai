@@ -12,21 +12,13 @@ import {
     DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
-import {
-    Drawer,
-    DrawerTrigger,
-    DrawerContent,
-    DrawerHeader,
-    DrawerFooter,
-    DrawerTitle,
-    DrawerDescription,
-} from '@/components/ui/drawer'
-
 import { signOut, useSession } from '@/lib/auth-client'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
-import { ChevronDownIcon, CreditCardIcon, LogOutIcon } from 'lucide-react'
+import { ChevronDownIcon, CreditCardIcon, LogOut, LogOutIcon, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { AvatarFallback } from '@/components/ui/avatar'
 
 export const DashboardUserButton = () => {
     const { data, isPending } = useSession()
@@ -49,44 +41,36 @@ export const DashboardUserButton = () => {
 
     if (isMobile) {
         return (
-            <Drawer>
-                <DrawerTrigger
-                    className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden'>
-                    {data.user.image ? (
-                        <Avatar>
-                            <AvatarImage src={data.user.image} className='size-9 rounded-full' />
-                        </Avatar>
-                    ) : (<GeneratedAvatar
-                        seed={data.user.name}
-                        variant='initials'
-                        className='size-9 mr-3'
-                    />
-                    )}
-                    <div className='flex flex-col gap-0.5 text-left overflow-hidden flex-1 min-w-0'>
-                        <p className='text-sm truncate w-full'>
-                            {data.user.name}
-                        </p>
-                        <p className='text-xs truncate w-full'>
-                            {data.user.email}
-                        </p>
-                    </div>
-                    <ChevronDownIcon className='size-4 shrink-0' />
-                </DrawerTrigger>
-                <DrawerContent>
-                    <DrawerHeader>
-                        <DrawerTitle>{data.user.name}</DrawerTitle>
-                        <DrawerDescription>{data.user.email}</DrawerDescription>
-                    </DrawerHeader>
-                    <DrawerFooter>
-                        <Button variant="outline" onClick={()=> {}}>
-                            <CreditCardIcon/> Billing
+            <div className='flex flex-col gap-3 p-4'>
+                {data && (
+                    <>
+                        <div className="flex items-center gap-4">
+                            <Avatar className="w-12 h-12">
+                                <Link href="/dashboard">
+                                    {data.user?.image ? (
+                                        <AvatarImage src={data.user.image} alt="User Avatar" className='rounded-full'/>
+                                    ) : (
+                                        <AvatarFallback><User /></AvatarFallback>
+                                    )}
+                                </Link>
+                            </Avatar>
+
+                            <div className='flex flex-col gap-1'>
+                                <p className="font-medium">{data.user.name}</p>
+                                <p className="text-sm text-muted-foreground">Welcome to Meet.AI</p>
+                            </div>
+                        </div>
+
+                        <Button
+                            variant="outline"
+                            className="w-full rounded-full text-black"
+                            onClick={() => signOut()}
+                        >
+                            <LogOut /> Logout
                         </Button>
-                        <Button variant="outline" onClick={onLogout}>
-                            <LogOutIcon/> Logout
-                        </Button>
-                    </DrawerFooter>
-                </DrawerContent>
-            </Drawer>
+                    </>
+                )}
+            </div>
         )
     }
 

@@ -3,8 +3,9 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 
-import { VideoIcon, BotIcon, StarIcon } from "lucide-react"
+import { VideoIcon, BotIcon, StarIcon, Sun, Moon } from "lucide-react"
 
 import {
     Sidebar,
@@ -21,6 +22,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
+import { Button } from "@/components/ui/button"
 
 const firstSection = [
     { icon: VideoIcon, label: "Meetings", href: "/dashboard/meetings" },
@@ -33,11 +35,12 @@ const secondSection = [
 
 export const DashboardSidebar = () => {
     const pathname = usePathname()
+    const { theme, setTheme } = useTheme()
     const { isMobile, setOpenMobile } = useSidebar()
 
     return (
         <Sidebar>
-            <SidebarHeader className="flex items-center text-sidebar-accent-foreground mr-5">
+            <SidebarHeader className="flex items-center text-sidebar-accent-foreground mr-5 mt-5">
                 <Link
                     href="/"
                     className="flex items-center gap-2 px-2 pt-2"
@@ -52,6 +55,13 @@ export const DashboardSidebar = () => {
             <br />
 
             <SidebarContent>
+                <SidebarGroup>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                            {isMobile && <DashboardUserButton />}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu>
@@ -106,9 +116,29 @@ export const DashboardSidebar = () => {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
+            <SidebarGroup>
+                <SidebarGroupContent>
+                    <SidebarMenu>
+                        {/* <SidebarMenuItem> */}
+                            {/* <SidebarMenuButton asChild> */}
+                                <div className="flex items-center justify-between pt-6 border-t border-border">
+                                    <span className="font-semibold">Theme</span>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                                    >
+                                        {theme === "dark" ? <Sun /> : <Moon />}
+                                    </Button>
+                                </div>
+                            {/* </SidebarMenuButton> */}
+                        {/* </SidebarMenuItem> */}
+                    </SidebarMenu>
+                </SidebarGroupContent>
+            </SidebarGroup>
 
             <SidebarFooter className="text-white">
-                <DashboardUserButton />
+                {!isMobile && <DashboardUserButton />}
             </SidebarFooter>
         </Sidebar>
     )
