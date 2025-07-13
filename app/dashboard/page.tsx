@@ -16,7 +16,7 @@ const Page = async () => {
     <div className="min-h-screen px-6 py-10 bg-background text-foreground space-y-8">
       <header>
         <h1 className="text-3xl font-bold">Welcome back, {session.user.name || "Agent"}</h1>
-        <p className="text-muted-foreground">Here's what's happening with your AI agents today.</p>
+        <p className="text-muted-foreground">Here&apos;s what&apos;s happening with your AI agents today.</p>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
