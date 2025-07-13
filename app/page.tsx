@@ -1,8 +1,8 @@
-import HomeView from '@/modules/home/ui/view/home-view'
-import React from 'react'
+import HomeView from "@/modules/home/ui/view/home-view";
 
-const Page = () => {
+
+const Home = () => {
   return <HomeView/>
-}
+};
 
-export default Page
+export default Home
