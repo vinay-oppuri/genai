@@ -24,7 +24,7 @@ export const CallProvider = ({meetingId, meetingName} : Props) => {
 
 
     return (
-        <div className="flex items-center justify-center m-auto">
+        <div>
             <CallConnect
                 meetingId={meetingId}
                 meetingName={meetingName}
