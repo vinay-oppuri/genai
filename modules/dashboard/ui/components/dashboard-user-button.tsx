@@ -41,35 +41,29 @@ export const DashboardUserButton = () => {
 
     if (isMobile) {
         return (
-            <div className='flex flex-col gap-3 p-2'>
-                {data && (
-                    <>
-                        <div className="flex items-center gap-2">
-                            <Avatar className="w-12 h-12">
-                                <Link href="/dashboard">
-                                    {data.user?.image ? (
-                                        <AvatarImage src={data.user.image} alt="User Avatar" className='rounded-full'/>
-                                    ) : (
-                                        <AvatarFallback><User /></AvatarFallback>
-                                    )}
-                                </Link>
-                            </Avatar>
-
-                            <div className='flex flex-col gap-1'>
-                                <p className="font-medium">{data.user.name}</p>
-                                <p className="text-sm text-muted-foreground">Welcome to Meet.AI</p>
-                            </div>
-                        </div>
-
-                        <Button
-                            className="w-full rounded-full shadow-xl shadow-primary/30 transition-all duration-300 hover:scale-105"
-                            onClick={() => signOut()}
-                        >
-                            <LogOut /> Logout
-                        </Button>
-                    </>
-                )}
-            </div>
+            <DropdownMenu>
+            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-background/50 overflow-hidden'>
+                <Button className='rounded-full ml-5'>
+                    Hi, {data.user.name}
+                    <ChevronDownIcon className='size-4 shrink-0' />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className='w-72'>
+                <DropdownMenuLabel>
+                    <div className='flex flex-col gap-1'>
+                        <span className='font-medium truncate'>{data.user.name}</span>
+                        <span className='text-sm font-normal text-muted-foreground truncate'>{data.user.email}</span>
+                    </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className='cursor-pointer flex items-center justify-between'>
+                    Billing <CreditCardIcon className='size-4' />
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={onLogout} className='cursor-pointer flex items-center justify-between'>
+                    Logout <LogOutIcon className='size-4' />
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
         )
     }
 

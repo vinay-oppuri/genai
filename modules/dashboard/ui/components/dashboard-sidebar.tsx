@@ -63,15 +63,6 @@ export const DashboardSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {isMobile && <DashboardUserButton />}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {/* Main Links */}
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
               {firstSection.map((item) => (
                 <SidebarMenuItem key={item.href} className="p-1">
                   <SidebarMenuButton
