@@ -21,7 +21,9 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
             />
             <CommandList>
                 <CommandItem>
-                    Test
+                    <div className="flex flex-row items-center justify-center m-auto gap-x-4">
+                        <p className="text-2xl font-medium text-muted-foreground">Search Here</p>
+                    </div>
                 </CommandItem>
             </CommandList>
         </CommandResponsiveDialog>

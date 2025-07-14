@@ -28,20 +28,20 @@ export const AgentsListHeader = () => {
             <div className="flex flex-col px-4 md:px-8 py-4 gap-y-4">
                 <div className="flex items-center justify-between">
                     <h5 className="font-medium text-xl">My Agents</h5>
-                    <Button onClick={() => {setIsDialogOpen(true)}}>
+                    <Button onClick={() => { setIsDialogOpen(true) }} className="shadow-primary/40 shadow-md">
                         <PlusIcon /> New Agent
                     </Button>
                 </div>
                 <ScrollArea>
-                <div className="flex items-center gap-x-2 p-1">
-                    <AgentsSearchFilter/>
-                    {isAntFilterModified && (
-                        <Button variant="outline" size="sm" onClick={onClearFilters}>
-                            <XCircleIcon/> Clear
-                        </Button>
-                    )}
-                </div>
-                <ScrollBar orientation="horizontal"/>
+                    <div className="flex items-center gap-x-2 p-1">
+                        <AgentsSearchFilter />
+                        {isAntFilterModified && (
+                            <Button variant="outline" size="sm" onClick={onClearFilters}>
+                                <XCircleIcon /> Clear
+                            </Button>
+                        )}
+                    </div>
+                    <ScrollBar orientation="horizontal" />
                 </ScrollArea>
             </div>
         </>

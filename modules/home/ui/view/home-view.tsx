@@ -8,7 +8,6 @@ import Image from "next/image"
 export default function HomeView() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-black text-gray-900 dark:text-gray-100 flex flex-col font-sans relative overflow-hidden">
-      
 
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-black/10 dark:border-white/10 backdrop-blur-xl bg-white/60 dark:bg-black/30 shadow-md">
@@ -32,14 +31,14 @@ export default function HomeView() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="hidden md:flex text-gray-700 dark:text-gray-300 hover:text-primary transition-all duration-300 relative group"
+                className="hidden md:flex text-foreground hover:text-primary transition-all duration-300 relative group"
               >
                 {item.label}
                 <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
             <Link href="/sign-in">
-              <Button variant="ghost" className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-primary transition-colors duration-300">
+              <Button variant="ghost" className="text-sm font-medium text-foreground transition-colors duration-300">
                 Login
               </Button>
             </Link>
@@ -60,7 +59,7 @@ export default function HomeView() {
         )}>
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-50 blur-xl pointer-events-none rounded-3xl"></div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-black dark:text-white relative z-10">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight text-foreground relative z-10">
             Run Smarter Meetings with <span className="text-primary drop-shadow-lg shadow-primary">AI Agents</span>
           </h2>
           <p className="text-md sm:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto relative z-10">
@@ -70,7 +69,7 @@ export default function HomeView() {
             <Link href="/sign-up">
               <Button
                 size="lg"
-                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white dark:text-black font-semibold py-3 px-8 rounded-full shadow-xl shadow-primary/40 transition-all duration-300 hover:scale-105"
+                className="w-30 sm:w-35 bg-primary hover:bg-primary/90 text-primary dark:text-black font-semibold py-3 px-8 rounded-full shadow-lg shadow-primary/40 transition-all duration-300 hover:scale-105"
               >
                 Start Free
               </Button>
@@ -79,7 +78,7 @@ export default function HomeView() {
               <Button
                 size="lg"
                 variant="outline"
-                className="w-full sm:w-auto border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 bg-transparent"
+                className="w-30 sm:w-35 border-2 border-primary text-primary font-semibold py-3 px-8 rounded-full transition-all duration-300 hover:scale-105 bg-transparent"
               >
                 Login
               </Button>

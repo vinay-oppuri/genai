@@ -41,10 +41,10 @@ export const DashboardUserButton = () => {
 
     if (isMobile) {
         return (
-            <div className='flex flex-col gap-3 p-4'>
+            <div className='flex flex-col gap-3 p-2'>
                 {data && (
                     <>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
                             <Avatar className="w-12 h-12">
                                 <Link href="/dashboard">
                                     {data.user?.image ? (
@@ -62,8 +62,7 @@ export const DashboardUserButton = () => {
                         </div>
 
                         <Button
-                            variant="outline"
-                            className="w-full rounded-full text-black"
+                            className="w-full rounded-full shadow-xl shadow-primary/30 transition-all duration-300 hover:scale-105"
                             onClick={() => signOut()}
                         >
                             <LogOut /> Logout
@@ -76,7 +75,7 @@ export const DashboardUserButton = () => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-white/5 hover:bg-white/10 overflow-hidden'>
+            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-background/50 overflow-hidden'>
                 {data.user.image ? (
                     <Avatar>
                         <AvatarImage src={data.user.image} className='size-9 rounded-full' />

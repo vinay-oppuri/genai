@@ -22,6 +22,7 @@ export const DataPagination = ({
         <Button
           variant="outline"
           disabled={page <= 1}
+          className="w-25 shadow-primary/40 shadow-xs"
           onClick={() => onPageChange(Math.max(1, page - 1))}
         >
           Previous
@@ -29,6 +30,7 @@ export const DataPagination = ({
         <Button
           variant="outline"
           disabled={page >= totalPages}
+          className="w-25 shadow-primary/40 shadow-xs"
           onClick={() => onPageChange(Math.min(totalPages, page + 1))}
         >
           Next
