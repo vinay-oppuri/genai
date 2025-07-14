@@ -20,7 +20,7 @@ const Page = async () => {
           Welcome back, <span className="text-primary">{session.user.name || "Agent"}</span>
         </h1>
         <p className="text-muted-foreground text-md sm:text-lg">
-          Here's what's happening with your AI agents today.
+          Here&apos;s what&apos;s happening with your AI agents today.
         </p>
       </header>
 
