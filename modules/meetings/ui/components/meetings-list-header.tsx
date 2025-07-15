@@ -1,14 +1,13 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { PlusIcon, XCircleIcon } from "lucide-react"
+import { PlusIcon, X } from "lucide-react"
 import { NewMeetingDialog } from "./new-meeting-dialog"
 import { useState } from "react"
 import { MeetingsSearchFilter } from "./meetings-search-filter"
 import { StatusFilter } from "./status-filter"
 import { AgentIdFilter } from "./agent-id-filter"
 import { useMeetingsFilters } from "../../hooks/use-meetings-filters"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { DEFAULT_PAGE } from "@/constants"
 
 export const MeetingsListHeader = () => {
@@ -32,29 +31,40 @@ export const MeetingsListHeader = () => {
                 open={isDialogOen}
                 onOpenChange={setIsDialogOpen}
             />
-            <div className="flex flex-col px-4 md:px-8 py-4 gap-y-4">
-                <div className="flex items-center justify-between">
+            <div className="flex flex-col px-4 md:px-8 py-8 gap-y-4">
+                <div className="flex items-center justify-between p-1">
                     <h5 className="font-medium text-xl">My Meetings</h5>
-                    <Button onClick={() => setIsDialogOpen(true)}>
-                        <PlusIcon /> New Meetings
+                    <Button onClick={() => setIsDialogOpen(true)} className="shadow-primary/40 shadow-md">
+                        <PlusIcon /> <p className="hidden md:flex">New Meetings</p>
                     </Button>
                 </div>
-                <ScrollArea>
-                    <div className="flex items-center gap-x-2 p-1">
+                <div className="flex flex-col gap-y-4 md:flex-row md:items-center md:gap-x-4">
+                    <div className="flex flex-row gap-3">
                         <MeetingsSearchFilter />
-                        <StatusFilter />
-                        <AgentIdFilter />
                         {isAnyFilterModified && (
                             <Button
                                 variant="outline"
                                 onClick={onClearFilters}
+                                className="flex md:hidden rounded-full md:ml-auto"
                             >
-                                <XCircleIcon size={4} /> Clear
+                                <X className="text-muted-foreground"/> <p className="mr-3">Clear</p>
                             </Button>
                         )}
                     </div>
-                    <ScrollBar orientation="horizontal"/>
-                </ScrollArea>
+                    <StatusFilter />
+                    <AgentIdFilter />
+
+                    {isAnyFilterModified && (
+                        <Button
+                            variant="outline"
+                            onClick={onClearFilters}
+                            className="hidden md:flex rounded-full"
+                        >
+                            <X className="text-muted-foreground" /> Clear
+                        </Button>
+                    )}
+                </div>
+
             </div>
         </>
     )

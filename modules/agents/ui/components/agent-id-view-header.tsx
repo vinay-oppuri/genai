@@ -31,7 +31,7 @@ export const AgentIdViewHeader = ({
 }: Props) => {
 
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-4">
             <Breadcrumb>
                 <BreadcrumbList>
                     <BreadcrumbItem>

@@ -13,7 +13,7 @@ const Page = async () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-950 dark:to-black px-6 py-10 text-gray-900 dark:text-gray-100 font-sans space-y-10 transition-all">
+    <div className="min-h-screen bg-background px-6 py-10 text-gray-900 dark:text-gray-100 font-sans space-y-10 transition-all">
       {/* Header */}
       <header className="text-center space-y-2">
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
@@ -33,7 +33,7 @@ const Page = async () => {
         ].map(({ title, value }, i) => (
           <Card
             key={i}
-            className="bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-lg shadow-primary/10 hover:scale-[1.01] transition-all duration-300"
+            className="bg-muted border backdrop-blur-xl shadow-lg shadow-primary/10 hover:scale-[1.01] transition-all duration-300"
           >
             <CardHeader>
               <CardTitle>{title}</CardTitle>
@@ -46,7 +46,7 @@ const Page = async () => {
       {/* Details Sections */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Meetings */}
-        <Card className="bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-md shadow-primary/10 transition-all duration-300 hover:scale-[1.01]">
+        <Card className="bg-muted border backdrop-blur-xl shadow-lg shadow-primary/10 transition-all duration-300 hover:scale-[1.01]">
           <CardHeader>
             <CardTitle>Recent Meetings</CardTitle>
           </CardHeader>
@@ -63,7 +63,7 @@ const Page = async () => {
         </Card>
 
         {/* Top Performing Agents */}
-        <Card className="bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 backdrop-blur-xl shadow-md shadow-primary/10 transition-all duration-300 hover:scale-[1.01]">
+        <Card className="bg-muted border backdrop-blur-xl shadow-lg shadow-primary/10 transition-all duration-300 hover:scale-[1.01]">
           <CardHeader>
             <CardTitle>Top Performing Agents</CardTitle>
           </CardHeader>

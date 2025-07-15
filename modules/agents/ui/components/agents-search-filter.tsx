@@ -12,10 +12,10 @@ export const AgentsSearchFilter = () => {
             <Input
                 placeholder="Filter by name"
                 value={filters.search}
-                className="h-9 w-[200px] pl-7"
+                className="h-9 w-[240px] pl-10 rounded-full"
                 onChange={(e) => setFilters({ search: e.target.value })}
             />
-            <SearchIcon className="size-4 absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground"/>
+            <SearchIcon className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"/>
         </div>
     )
 }

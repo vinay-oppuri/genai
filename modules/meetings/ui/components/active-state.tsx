@@ -10,7 +10,7 @@ interface Props {
 export const ActiveState = ({ meetingId }: Props) => {
 
     return (
-        <div className="bg-background flex flex-col items-center justify-center rounded-lg px-4 py-5 gap-y-8">
+        <div className="bg-background flex flex-col items-center justify-center rounded-lg px-4 py-5 gap-y-8 shadow-primary/40 shadow-sm">
             <EmptyState
                 image="/upcoming.svg"
                 title="Meeting is active"
