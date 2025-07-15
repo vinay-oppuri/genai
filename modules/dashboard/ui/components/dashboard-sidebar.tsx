@@ -137,7 +137,7 @@ export const DashboardSidebar = () => {
 
       {/* Footer */}
       <SidebarFooter className="text-foreground py-4">
-        {!isMobile && <DashboardUserButton />}
+        <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
   )

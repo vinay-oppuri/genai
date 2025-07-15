@@ -17,7 +17,7 @@ const Page = async () => {
       {/* Header */}
       <header className="text-center space-y-2">
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight">
-          Welcome back, <span className="text-primary">{session.user.name || "Agent"}</span>
+          Welcome back, <span className="text-primary dark:text-green-500">{session.user.name || "Agent"}</span>
         </h1>
         <p className="text-muted-foreground text-md sm:text-lg">
           Here&apos;s what&apos;s happening with your AI agents today.

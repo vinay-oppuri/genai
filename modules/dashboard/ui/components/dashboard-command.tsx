@@ -19,13 +19,6 @@ export const DashboardCommand = ({ open, setOpen }: Props) => {
             <CommandInput
                 placeholder="Find a meeting or agent"
             />
-            <CommandList>
-                <CommandItem>
-                    <div className="flex flex-row items-center justify-center m-auto gap-x-4">
-                        <p className="text-2xl font-medium text-muted-foreground">Search Here</p>
-                    </div>
-                </CommandItem>
-            </CommandList>
         </CommandResponsiveDialog>
     )
 }

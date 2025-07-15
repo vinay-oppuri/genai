@@ -41,29 +41,29 @@ export const DashboardUserButton = () => {
 
     if (isMobile) {
         return (
-            <DropdownMenu>
-            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-background/50 overflow-hidden'>
-                <Button className='rounded-full ml-5'>
-                    Hi, {data.user.name}
-                    <ChevronDownIcon className='size-4 shrink-0' />
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-72'>
-                <DropdownMenuLabel>
-                    <div className='flex flex-col gap-1'>
-                        <span className='font-medium truncate'>{data.user.name}</span>
-                        <span className='text-sm font-normal text-muted-foreground truncate'>{data.user.email}</span>
+            <>
+                <div className="flex items-center gap-4">
+                    <Avatar className="w-12 h-12">
+                        {data.user?.image ? (
+                            <AvatarImage src={data.user.image} alt="User Avatar" className='rounded-full'/>
+                        ) : (
+                            <AvatarFallback><User /></AvatarFallback>
+                        )}
+                    </Avatar>
+
+                    <div>
+                        <p className="font-medium text-white">{data.user.name}</p>
+                        <p className="text-sm text-muted-foreground">Welcome to Meet.AI</p>
                     </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className='cursor-pointer flex items-center justify-between'>
-                    Billing <CreditCardIcon className='size-4' />
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={onLogout} className='cursor-pointer flex items-center justify-between'>
-                    Logout <LogOutIcon className='size-4' />
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+                </div>
+
+                <Button
+                    className="w-full rounded-full bg-primary/60"
+                    onClick={() => signOut()}
+                >
+                    <LogOut /> Logout
+                </Button>
+            </>
         )
     }
 
