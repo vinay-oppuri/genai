@@ -9,6 +9,7 @@ import {
 import { DashboardCommand } from "./dashboard-command"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 export const DashboardNavbar = () => {
   const { toggleSidebar, isMobile } = useSidebar()
@@ -30,7 +31,7 @@ export const DashboardNavbar = () => {
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
 
-      <nav className="sticky top-2 md:top-0 z-40 mx-2 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-xl px-4 py-5 md:py-3 rounded-full md:rounded-none">
+      <nav className="sticky top-2 md:top-0 z-40 mx-2 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-md px-4 py-5 md:py-3 rounded-full md:rounded-none">
 
         {/* LEFT SECTION */}
         <div className="flex items-center gap-3">
@@ -56,7 +57,7 @@ export const DashboardNavbar = () => {
           </Button>
 
           {/* Mobile: Logo */}
-          <div className="md:hidden relative">
+          <Link href='/' className="md:hidden relative cursor-pointer">
             <Image
               src="/logo.svg"
               height={36}
@@ -65,8 +66,9 @@ export const DashboardNavbar = () => {
               className="filter drop-shadow-md brightness-110 dark:brightness-125 not-md:ml-2"
             />
             <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-2" />
-          </div>
-          <span className="md:hidden text-xl font-semibold">Meet<span className="text-green-500">.AI</span></span>
+          </Link>
+
+          <Link href='/' className="md:hidden text-xl font-semibold">Meet<span className="text-green-500">.AI</span></Link>
         </div>
 
         {/* RIGHT SECTION (Only on Mobile) */}
