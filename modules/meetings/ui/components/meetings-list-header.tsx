@@ -47,7 +47,7 @@ export const MeetingsListHeader = () => {
                                 onClick={onClearFilters}
                                 className="flex md:hidden rounded-full md:ml-auto"
                             >
-                                <X className="text-muted-foreground"/> <p className="mr-3">Clear</p>
+                                <X className="text-muted-foreground"/> Clear
                             </Button>
                         )}
                     </div>

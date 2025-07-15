@@ -31,7 +31,7 @@ export const DashboardNavbar = () => {
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
 
-      <nav className="sticky top-2 md:top-0 right-2 md:right-0 left-2 md:left-2 z-40 w-full flex justify-between items-center bg-background border md:border-b backdrop-blur-xs shadow-sm px-4 py-5 md:py-3 not-md:rounded-full">
+      <nav className="sticky top-2 md:top-0 right-2 md:right-0 left-2 md:left-2 z-40 w-full flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-sm px-4 py-5 md:py-3 not-md:rounded-full">
         {/* LEFT SECTION */}
         <div className="flex items-center gap-3">
           {/* Desktop: Search bar + Menu button */}

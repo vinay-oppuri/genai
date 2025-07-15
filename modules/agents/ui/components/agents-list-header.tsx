@@ -35,7 +35,7 @@ export const AgentsListHeader = () => {
                     <AgentsSearchFilter />
                     {isAntFilterModified && (
                         <Button variant="outline" className="rounded-full" onClick={onClearFilters}>
-                            <X className="text-muted-foreground"/> <p className="mr-3">Clear</p>
+                            <X className="text-muted-foreground"/>Clear
                         </Button>
                     )}
                 </div>
