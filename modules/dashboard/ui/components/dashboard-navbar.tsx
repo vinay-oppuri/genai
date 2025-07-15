@@ -8,7 +8,6 @@ import {
 } from "lucide-react"
 import { DashboardCommand } from "./dashboard-command"
 import { useEffect, useState } from "react"
-import { DashboardUserButton } from "./dashboard-user-button"
 import Image from "next/image"
 
 export const DashboardNavbar = () => {
@@ -31,7 +30,8 @@ export const DashboardNavbar = () => {
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
 
-      <nav className="sticky top-2 md:top-0 right-2 md:right-0 left-2 md:left-2 z-40 w-full flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-sm px-4 py-5 md:py-3 not-md:rounded-full">
+      <nav className="sticky top-2 md:top-0 z-40 mx-2 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-xl px-4 py-5 md:py-3 rounded-full md:rounded-none">
+
         {/* LEFT SECTION */}
         <div className="flex items-center gap-3">
           {/* Desktop: Search bar + Menu button */}
@@ -62,9 +62,9 @@ export const DashboardNavbar = () => {
               height={36}
               width={36}
               alt="Meet.AI"
-              className="filter drop-shadow-md brightness-110 dark:brightness-125 not-md:ml-3"
+              className="filter drop-shadow-md brightness-110 dark:brightness-125 not-md:ml-2"
             />
-            <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-3" />
+            <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-2" />
           </div>
           <span className="md:hidden text-xl font-semibold">Meet<span className="text-green-500">.AI</span></span>
         </div>
@@ -75,7 +75,7 @@ export const DashboardNavbar = () => {
             onClick={() => setCommandOpen((open) => !open)}
             variant="outline"
             size="sm"
-            className="flex h-9 w-[120px] bg-background shadow-primary/50 justify-start font-normal rounded-full transition-all"
+            className="flex h-9 w-[120px] bg-background justify-start font-normal rounded-full transition-all"
           >
             <SearchIcon className="mr-2 h-4 w-4" /> Search
           </Button>
