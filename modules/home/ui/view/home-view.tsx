@@ -26,8 +26,8 @@ export default function HomeView() {
   return (
     <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden">
       {/* headers */}
-      <header className="fixed top-1 md:top-0 mx-1 md:mx-0 z-50 w-full backdrop-blur-xs border md:border-b bg-background/70 shadow-md p-4 md:py-3 rounded-full md:rounded-none overflow-x-hidden">
-        <div className="flex items-center justify-between">
+      <header className="fixed top-1 md:top-0 left-1 right-1 md:mx-0 z-50  backdrop-blur-xs border md:border-b bg-background/70 shadow-md p-4 md:py-3 rounded-full md:rounded-none">
+        <div className="mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href='/' className="md:hidden relative cursor-pointer">
               <Image
@@ -73,7 +73,7 @@ export default function HomeView() {
                   <MenuIcon className="w-5 h-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-44">
+              <DropdownMenuContent align="end" className="bg-background/70 backdrop-blur-xs font-medium w-40">
                 {headers.map((item) => (
                   <DropdownMenuItem asChild key={item.href}>
                     <Link href={item.href}>{item.label}</Link>
