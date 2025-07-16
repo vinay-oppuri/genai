@@ -30,11 +30,11 @@ Example:
 - Feature X automatically does Y
 - Mention of integration with Z
     `.trim(),
-    model: gemini({model: 'gemini-2.5-flash', apiKey: process.env.GEMINI_API_KEY})
+    model: gemini({ model: 'gemini-2.0-flash', apiKey: process.env.GEMINI_API_KEY })
 })
 
 export const meetingsProcessing = inngest.createFunction(
-    { id: "meetings/processing" },
+    { id: "dashboard/meetings/processing" },
     { event: "meetings/processing" },
     async ({ event, step }) => {
         const response = await step.run("fetch-transcript", async () => {
@@ -70,7 +70,7 @@ export const meetingsProcessing = inngest.createFunction(
 
             return transcript.map((item) => {
                 const speaker = speakers.find(
-                    (speaker) => speaker.id = item.speaker_id
+                    (speaker) => speaker.id === item.speaker_id
                 )
 
                 if (!speaker) {
@@ -89,21 +89,21 @@ export const meetingsProcessing = inngest.createFunction(
                     }
                 }
             })
-
-            const {output} = await summarizer.run(
-                "Summarize the following transcript" +
-                JSON.stringify(transcriptWithSpeakers)
-            )
-
-            await step.run("save-summary", async () => {
-                await db
-                    .update(meetings)
-                    .set({
-                        summary: (output[0] as TextMessage).content as string,
-                        status: "completed"
-                    })
-                    .where(eq(meetings.id, event.data.meetingId))
-            })
         })
+        const { output } = await summarizer.run(
+            "Summarize the following transcript" +
+            JSON.stringify(transcriptWithSpeakers)
+        )
+
+        await step.run("save-summary", async () => {
+            await db
+                .update(meetings)
+                .set({
+                    summary: (output[0] as TextMessage).content as string,
+                    status: "completed"
+                })
+                .where(eq(meetings.id, event.data.meetingId))
+        })
+
     }
 )

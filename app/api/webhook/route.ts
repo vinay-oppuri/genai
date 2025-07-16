@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
         const event = payload as CallTranscriptionReadyEvent
         const meetingId = event.call_cid.split(":")[1]
 
-        const [updateMeeting] = await db
+        const [updatedMeeting] = await db
             .update(meetings)
             .set({
                 transcriptUrl: event.call_transcription.url,
@@ -126,15 +126,15 @@ export async function POST(req: NextRequest) {
             .where(eq(meetings.id, meetingId))
             .returning()
         
-        if(!updateMeeting) {
+        if(!updatedMeeting) {
             return NextResponse.json({error: "Meeting not found"}, {status: 404})
         }
 
         await inngest.send({
-            name: "meetings/processing",
+            name: "dashboard/meetings/processing",
             data: {
-                meetingId: updateMeeting.id,
-                transcriptUrl: updateMeeting.transcriptUrl
+                meetingId: updatedMeeting.id,
+                transcriptUrl: updatedMeeting.transcriptUrl
             }
         })
 
