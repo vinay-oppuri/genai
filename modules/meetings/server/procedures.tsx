@@ -1,16 +1,17 @@
 import { z } from "zod";
-import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
+import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "drizzle-orm";
 
 import { db } from "@/db";
-import { agents, meetings } from "@/db/schema";
+import { agents, meetings, user } from "@/db/schema";
 
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 import { TRPCError } from "@trpc/server";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
-import { MeetingStatus } from "../types";
+import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { GenerateAvatarUri } from "@/lib/avatar";
+import JSONL from "jsonl-parse-stringify";
 
 export const meetingsRouter = createTRPCRouter({
 
@@ -133,8 +134,8 @@ export const meetingsRouter = createTRPCRouter({
                             closed_caption_mode: "auto-on"
                         },
                         recording: {
-                        mode: "auto-on",
-                        quality: "1080p"
+                            mode: "auto-on",
+                            quality: "1080p"
                         }
                     },
                 }
@@ -145,8 +146,8 @@ export const meetingsRouter = createTRPCRouter({
                 .from(agents)
                 .where(eq(agents.id, createdMeeting.agentId))
 
-            if(!existingAgent) {
-                throw new TRPCError({code: "NOT_FOUND", message: "Agent not found"})
+            if (!existingAgent) {
+                throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" })
             }
 
             await streamVideo.upsertUsers([
@@ -154,7 +155,7 @@ export const meetingsRouter = createTRPCRouter({
                     id: existingAgent.id,
                     name: existingAgent.name,
                     role: "user",
-                    image: GenerateAvatarUri({seed: existingAgent.name, variant: "botttsNeutral"})
+                    image: GenerateAvatarUri({ seed: existingAgent.name, variant: "botttsNeutral" })
                 }
             ])
 
@@ -208,24 +209,106 @@ export const meetingsRouter = createTRPCRouter({
 
     // GENERATE TOKEN PROCEDURE
     generateToken: protectedProcedure.mutation(async ({ ctx }) => {
-            await streamVideo.upsertUsers([
-                {
-                    id: ctx.auth.user.id,
-                    name: ctx.auth.user.name,
-                    role: "admin",
-                    image: ctx.auth.user.image ?? GenerateAvatarUri({ seed: ctx.auth.user.name, variant: "initials" }),
+        await streamVideo.upsertUsers([
+            {
+                id: ctx.auth.user.id,
+                name: ctx.auth.user.name,
+                role: "admin",
+                image: ctx.auth.user.image ?? GenerateAvatarUri({ seed: ctx.auth.user.name, variant: "initials" }),
+            }
+        ])
+
+        const expirationTime = Math.floor(Date.now() / 1000) + 3600
+        const issuedAt = Math.floor(Date.now() / 1000) - 60
+
+        const token = streamVideo.generateUserToken({
+            user_id: ctx.auth.user.id,
+            exp: expirationTime,
+            validity_in_seconds: issuedAt
+        })
+
+        return token
+    }),
+
+
+    getTranscript: protectedProcedure
+        .input(z.object({ id: z.string() }))
+        .query(async ({ input, ctx }) => {
+            const [existingMeeting] = await db
+                .select()
+                .from(meetings)
+                .where(
+                    and(
+                        eq(meetings.id, input.id),
+                        eq(meetings.userId, ctx.auth.user.id)
+                    )
+                )
+
+            if (!existingMeeting) {
+                throw new TRPCError({ code: "NOT_FOUND", message: "Meeting not found" })
+            }
+
+            if (!existingMeeting.transcriptUrl) {
+                return []
+            }
+
+            const transcript = await fetch(existingMeeting.transcriptUrl)
+                .then((res) => res.text())
+                .then((text) => JSONL.parse<StreamTranscriptItem>(text))
+                .catch(() => [])
+
+            const speakerIds = [
+                ...new Set(transcript.map((item) => item.speaker_id))
+            ]
+
+            const userSpeakers = await db
+                .select()
+                .from(user)
+                .where(inArray(user.id, speakerIds))
+                .then((userRows) =>
+                    userRows.map((user) => ({
+                        ...user,
+                        image: user.image ?? GenerateAvatarUri({ seed: user.name, variant: "initials" })
+                    }))
+                )
+
+            const agentSpeakers = await db
+                .select()
+                .from(agents)
+                .where(inArray(agents.id, speakerIds))
+                .then((agents) =>
+                    agents.map((agent) => ({
+                        ...agent,
+                        image: GenerateAvatarUri({ seed: agent.name, variant: "botttsNeutral" })
+                    }))
+                )
+
+            const speakers = [...userSpeakers, ...agentSpeakers]
+
+            const transcriptWithSpeakers = transcript.map((item) => {
+                const speaker = speakers.find(
+                    (speaker) => speaker.id === item.speaker_id
+                )
+
+                if (!speaker) {
+                    return {
+                        ...item,
+                        user: {
+                            name: "Unknown",
+                            image: GenerateAvatarUri({seed: "Unknown", variant: "initials"})
+                        }
+                    }
                 }
-            ])
 
-            const expirationTime = Math.floor(Date.now() / 1000) + 3600
-            const issuedAt = Math.floor(Date.now() / 1000) - 60
-
-            const token = streamVideo.generateUserToken({
-                user_id: ctx.auth.user.id,
-                exp: expirationTime,
-                validity_in_seconds: issuedAt
+                return {
+                    ...item,
+                    user: {
+                        name: speaker?.name,
+                        image: speaker?.image || "No IMG"
+                    }
+                }
             })
 
-            return token
+            return transcriptWithSpeakers
         })
 })
