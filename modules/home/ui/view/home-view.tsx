@@ -4,37 +4,46 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useSession } from "@/lib/auth-client"
-import { LogInIcon, Moon, Sun } from "lucide-react"
+import { MenuIcon, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
 
 export default function HomeView() {
   const { data: session } = useSession()
   const { setTheme, theme } = useTheme()
 
-  return (
-    <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-hidden">
-      {/* Background Grid and Glow */}
-      <div className="absolute inset-0 z-0 opacity-20 dark:opacity-30 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
-        <div className="absolute inset-0 bg-grid-small-white/10 [mask-image:radial-gradient(ellipse_80%_80%_at_50%_0%,#000,transparent)]"></div>
-      </div>
+  const headers = [
+    { label: "Features", href: "/#features" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "FAQ", href: "/#faq" },
+  ]
 
-      {/* Header */}
-      <header className="fixed top-0 z-50 w-full backdrop-blur-sm border-b bg-background/70 shadow-sm py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Image src="/logo.svg" height={40} width={40} alt="Meet.AI" className="drop-shadow-md brightness-110" />
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-foreground tracking-tight flex items-center gap-1">
-              Meet<span className="text-green-500">.AI</span>
+  return (
+    <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden">
+      {/* headers */}
+      <header className="fixed top-1 md:top-0 mx-1 md:mx-0 z-50 w-full backdrop-blur-xs border md:border-b bg-background/70 shadow-md p-4 md:py-3 rounded-full md:rounded-none overflow-x-hidden">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href='/' className="md:hidden relative cursor-pointer">
+              <Image
+                src="/logo.svg"
+                height={36}
+                width={36}
+                alt="Meet.AI"
+                className="filter drop-shadow-md brightness-110 dark:brightness-125 not-md:ml-2"
+              />
+              <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-2" />
             </Link>
+            <Link href='/' className="md:hidden text-foreground text-xl font-semibold">Meet<span className="text-green-500">.AI</span></Link>
           </div>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {[
-              { label: "Features", href: "/#features" },
-              { label: "Pricing", href: "/#pricing" },
-              { label: "FAQ", href: "/#faq" },
-            ].map((item) => (
+            {headers.map((item) => (
               <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform">
                 {item.label}
               </Link>
@@ -42,29 +51,45 @@ export default function HomeView() {
           </nav>
 
           <div className="flex items-center gap-2 text-foreground">
-            {session ? (
-              <Link href="/dashboard">
-                <Button>
-                  <LogInIcon className="h-4 w-4" />
-                  Dashboard
-                </Button>
-              </Link>
-            ) : (
-              <Link href="/dashboard">
-                <Button className="rounded-full">
-                  Get Started
-                </Button>
-              </Link>
-            )}
+            <Link href="/dashboard">
+              <Button className="rounded-full w-30">
+                {session ? "Dashboard" : "Get Started"}
+              </Button>
+            </Link>
+
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label="Toggle Theme"
+              className="hidden md:flex"
             >
               {theme === "dark" ? <Sun /> : <Moon />}
             </Button>
+
+            {/* Mobile Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="ghost" className="md:hidden">
+                  <MenuIcon className="w-5 h-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                {headers.map((item) => (
+                  <DropdownMenuItem asChild key={item.href}>
+                    <Link href={item.href}>{item.label}</Link>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuItem
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                  className="flex justify-between items-center"
+                >
+                  Theme
+                  {theme === "dark" ? <Sun className="w-4 h-4 ml-2" /> : <Moon className="w-4 h-4 ml-2" />}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
+
         </div>
       </header>
 
