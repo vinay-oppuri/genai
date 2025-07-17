@@ -12,7 +12,7 @@ import {
     DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu'
 
-import { signOut, useSession } from '@/lib/auth-client'
+import { authClient, signOut, useSession } from '@/lib/auth-client'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { ChevronDownIcon, CreditCardIcon, LogOut, LogOutIcon, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -98,7 +98,7 @@ export const DashboardUserButton = () => {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className='cursor-pointer flex items-center justify-between'>
+                <DropdownMenuItem className='cursor-pointer flex items-center justify-between' onClick={() => authClient.customer.portal()}>
                     Billing <CreditCardIcon className='size-4' />
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={onLogout} className='cursor-pointer flex items-center justify-between'>

@@ -9,11 +9,19 @@ import { Badge } from "@/components/ui/badge"
 import { formatDuration } from "@/lib/utils"
 import Markdown from "react-markdown"
 import { Transcript } from "./transcript"
+import { ChatProvider } from "./chat-provider"
 
 
 interface Props {
     data: MeetingGetOne
 }
+
+const tabs = [
+    { value: "summary", icon: <BookOpenTextIcon />, label: "Summary" },
+    { value: "transcript", icon: <FileTextIcon />, label: "Transcript" },
+    { value: "recording", icon: <FileVideoIcon />, label: "Recording" },
+    { value: "chat", icon: <SparklesIcon />, label: "Ask AI" }
+]
 
 export const CompletedState = ({ data }: Props) => {
     return (
@@ -22,36 +30,20 @@ export const CompletedState = ({ data }: Props) => {
                 <div className="bg-background rounded-lg border px-3">
                     <ScrollArea>
                         <TabsList className="bg-background justify-start rounded-none h-13 p-0">
-                            <TabsTrigger
-                                value="summary"
-                                className="text-muted-foreground rounded-none bg-background data-[slate=active]:shadow-none border-b-2 border-transparent data-[slate=active]:border-b-primary data-[slate=active]:text-accent-foreground h-full hover:text-accent-foreground"
-                            >
-                                <BookOpenTextIcon /> Summary
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="transcript"
-                                className="text-muted-foreground rounded-none bg-background data-[slate=active]:shadow-none border-b-2 border-transparent data-[slate=active]:border-b-primary data-[slate=active]:text-accent-foreground h-full hover:text-accent-foreground"
-                            >
-                                <FileTextIcon /> Transcript
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="recording"
-                                className="text-muted-foreground rounded-none bg-background data-[slate=active]:shadow-none border-b-2 border-transparent data-[slate=active]:border-b-primary data-[slate=active]:text-accent-foreground h-full hover:text-accent-foreground"
-                            >
-                                <FileVideoIcon /> Recording
-                            </TabsTrigger>
-                            <TabsTrigger
-                                value="chat"
-                                className="text-muted-foreground rounded-none bg-background data-[slate=active]:shadow-none border-b-2 border-transparent data-[slate=active]:border-b-primary data-[slate=active]:text-accent-foreground h-full hover:text-accent-foreground"
-                            >
-                                <SparklesIcon /> Ask AI
-                            </TabsTrigger>
+                            {tabs.map((tab) => (
+                                <TabsTrigger key={tab.value} value={tab.value}>
+                                    {tab.icon} {tab.label}
+                                </TabsTrigger>
+                            ))}
                         </TabsList>
                         <ScrollBar orientation="horizontal" />
                     </ScrollArea>
                 </div>
+                <TabsContent value="chat">
+                    <ChatProvider meetingId={data.id} meetingName={data.name} />
+                </TabsContent>
                 <TabsContent value="transcript">
-                    <Transcript meetingId={data.id}/>
+                    <Transcript meetingId={data.id} />
                 </TabsContent>
                 <TabsContent value="recording">
                     <div className="bg-white rounded-lg border px-4 py-5">
@@ -64,7 +56,7 @@ export const CompletedState = ({ data }: Props) => {
                 </TabsContent>
                 <TabsContent value="summary">
                     <div className="bg-background rounded-lg border">
-                        <div className="px-4 py-5 ay5 flex flex-col col-span-5">
+                        <div className="px-4 py-5 flex flex-col gap-3">
                             <h2 className="text-2xl font-medium capitalize">{data.name}</h2>
                             <div className="flex gap-x-2 items-center">
                                 <Link href={`/dashboard/agents/${data.agent.id}`}

@@ -26,10 +26,10 @@ export default function HomeView() {
   return (
     <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden">
       {/* headers */}
-      <header className="fixed top-1 md:top-0 left-1 right-1 md:mx-0 z-50  backdrop-blur-xs border md:border-b bg-background/70 shadow-md p-4 md:py-3 rounded-full md:rounded-none">
-        <div className="mx-auto flex items-center justify-between">
+      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50  backdrop-blur-xs border md:border-none bg-background/70 p-4 rounded-full md:rounded-none">
+        <div className="flex items-center justify-between md:mx-30">
           <div className="flex items-center gap-3">
-            <Link href='/' className="md:hidden relative cursor-pointer">
+            <Link href='/' className="flex relative cursor-pointer">
               <Image
                 src="/logo.svg"
                 height={36}
@@ -39,10 +39,10 @@ export default function HomeView() {
               />
               <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-2" />
             </Link>
-            <Link href='/' className="md:hidden text-foreground text-xl font-semibold">Meet<span className="text-green-500">.AI</span></Link>
+            <div className="text-foreground text-xl font-semibold">Meet<span className="text-green-500">.AI</span></div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium border-2 rounded-lg px-8 py-3">
             {headers.map((item) => (
               <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform">
                 {item.label}
@@ -52,7 +52,7 @@ export default function HomeView() {
 
           <div className="flex items-center gap-2 text-foreground">
             <Link href="/dashboard">
-              <Button className="rounded-full w-30">
+              <Button className="rounded-full w-30 bg-primary/80 backdrop-blur-xs">
                 {session ? "Dashboard" : "Get Started"}
               </Button>
             </Link>

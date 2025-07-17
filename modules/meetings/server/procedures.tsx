@@ -4,7 +4,7 @@ import { and, count, desc, eq, getTableColumns, ilike, inArray, sql } from "driz
 import { db } from "@/db";
 import { agents, meetings, user } from "@/db/schema";
 
-import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { createTRPCRouter, premiumProcedure, protectedProcedure } from "@/trpc/init";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE, MIN_PAGE_SIZE } from "@/constants";
 import { TRPCError } from "@trpc/server";
 import { meetingsInsertSchema, meetingsUpdateSchema } from "../schemas";
@@ -12,6 +12,7 @@ import { MeetingStatus, StreamTranscriptItem } from "../types";
 import { streamVideo } from "@/lib/stream-video";
 import { GenerateAvatarUri } from "@/lib/avatar";
 import JSONL from "jsonl-parse-stringify";
+import { streamChat } from "@/lib/stream-chat";
 
 export const meetingsRouter = createTRPCRouter({
 
@@ -108,7 +109,7 @@ export const meetingsRouter = createTRPCRouter({
         }),
 
     // CREATE PROCEDURE
-    create: protectedProcedure
+    create: premiumProcedure("meetings")
         .input(meetingsInsertSchema)
         .mutation(async ({ input, ctx }) => {
             const [createdMeeting] = await db
@@ -295,7 +296,7 @@ export const meetingsRouter = createTRPCRouter({
                         ...item,
                         user: {
                             name: "Unknown",
-                            image: GenerateAvatarUri({seed: "Unknown", variant: "initials"})
+                            image: GenerateAvatarUri({ seed: "Unknown", variant: "initials" })
                         }
                     }
                 }
@@ -310,5 +311,17 @@ export const meetingsRouter = createTRPCRouter({
             })
 
             return transcriptWithSpeakers
+        }),
+
+    // GENERATE CHAT TOKEN PROCEDURE
+    generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
+            const token = streamChat.createToken(ctx.auth.user.id)
+            await streamChat.upsertUser({
+                id: ctx.auth.user.id,
+                role: "admin"
+            })
+
+            return token
         })
+
 })

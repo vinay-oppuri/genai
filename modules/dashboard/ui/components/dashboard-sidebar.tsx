@@ -25,6 +25,7 @@ import {
 import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
 import { Button } from "@/components/ui/button"
+import { DashboardTrial } from "./dashboard-trial"
 
 const firstSection = [
   { icon: LayoutDashboardIcon, label: "Dashboard", href: "/dashboard" },
@@ -137,6 +138,7 @@ export const DashboardSidebar = () => {
 
       {/* Footer */}
       <SidebarFooter className="text-foreground py-4">
+        <DashboardTrial/>
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
