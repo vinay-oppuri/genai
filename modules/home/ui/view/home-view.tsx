@@ -12,9 +12,17 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 import { UpgradeView } from "@/modules/premium/ui/views/upgrade-view"
+import { useEffect, useState } from "react"
 
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
+  const [mounted, setMounted] = useState(false) 
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if(!mounted) return null
 
   const headers = [
     { label: "Home", href: "#home" },
@@ -94,12 +102,12 @@ export const HomeView = () => {
                     <Link href={item.href}>{item.label}</Link>
                   </DropdownMenuItem>
                 ))}
-                <DropdownMenuItem
+                {mounted && (<DropdownMenuItem
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
                   className="flex justify-between items-center"
                 >
                   Theme {theme === "dark" ? <Sun className="w-4 h-4 ml-2" /> : <Moon className="w-4 h-4 ml-2" />}
-                </DropdownMenuItem>
+                </DropdownMenuItem>)}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
