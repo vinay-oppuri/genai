@@ -50,7 +50,7 @@ export const SignUpView = () => {
             name: data.name,
             email: data.email,
             password: data.password,
-            callbackURL: '/'
+            callbackURL: '/dashboard'
         }, {
             onSuccess: () => {
                 setPending(false)
@@ -68,7 +68,7 @@ export const SignUpView = () => {
 
         signIn.social({
             provider: provider,
-            callbackURL: '/'
+            callbackURL: '/dashboard'
         }, {
             onSuccess: () => {
                 setPending(false)

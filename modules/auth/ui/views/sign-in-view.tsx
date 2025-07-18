@@ -41,7 +41,7 @@ export const SignInView = () => {
         signIn.email({
             email: data.email,
             password: data.password,
-            callbackURL: '/'
+            callbackURL: '/dashboard'
         }, {
             onSuccess: () => {
                 setPending(false)
@@ -59,7 +59,7 @@ export const SignInView = () => {
 
         signIn.social({
             provider: provider,
-            callbackURL: '/'
+            callbackURL: '/dashboard'
         }, {
             onSuccess: () => {
                 setPending(false)
