@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { useSession } from "@/lib/auth-client"
 import { MenuIcon, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import {
@@ -14,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export const HomeView = () => {
-  const { data: session } = useSession()
   const { setTheme, theme } = useTheme()
 
   const headers = [
@@ -53,7 +51,7 @@ export const HomeView = () => {
           <div className="flex items-center gap-2 text-foreground">
             <Link href="/dashboard">
               <Button className="rounded-full w-30 bg-primary/80 backdrop-blur-xs">
-                {session ? "Dashboard" : "Get Started"}
+                Get Started
               </Button>
             </Link>
 
