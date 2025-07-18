@@ -15,7 +15,7 @@ export const DashboardTrial = () => {
     if(!data) return null
 
     return (
-        <div className="flex flex-col gap-y-2 border border-border/10 rounded-lg w-full bg-white/5">
+        <div className="flex flex-col gap-y-2 text-muted-foreground border border-border/10 rounded-lg w-full bg-white/5">
             <div className="flex flex-col p-3 gap-y-4">
                 <div className="flex items-center gap-2">
                     <RocketIcon className="size-4"/>
@@ -34,7 +34,7 @@ export const DashboardTrial = () => {
                     <Progress value={(data.meetingCount / MAX_FREE_MEETINGS) * 100}/>
                 </div>
             </div>
-            <Button asChild className="bg-transparent border-t border-border/10 hover:bg-white/10 rounded-t-none">
+            <Button asChild className="bg-transparent text-white border-t border-border/10 hover:bg-white/10 rounded-t-none">
                 <Link href='/upgrade'>Upgrade</Link>
             </Button>
         </div>

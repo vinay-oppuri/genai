@@ -99,7 +99,7 @@ export const DashboardSidebar = () => {
                     asChild
                     className={cn(
                       "h-10 rounded-lg border border-transparent hover:bg-yellow-400/10 hover:text-yellow-500 transition-all duration-300 hover:scale-105",
-                      pathname === item.href && "bg-yellow-400/10 text-yellow-600 font-semibold shadow-yellow-400/10 shadow-xl"
+                      pathname === item.href && "bg-yellow-400/10 text-yellow-600 font-semibold shadow-primary/10 shadow-xl"
                     )}
                     isActive={pathname === item.href}
                   >
