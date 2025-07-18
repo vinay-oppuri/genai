@@ -11,7 +11,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
-import { UpgradeView } from "@/modules/premium/ui/views/upgrade-view"
 import { useEffect, useState } from "react"
 
 export const HomeView = () => {
@@ -27,7 +26,7 @@ export const HomeView = () => {
   const headers = [
     { label: "Home", href: "#home" },
     { label: "Features", href: "#features" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Pricing", href: "/dashboard/upgrade" },
     { label: "FAQ", href: "#faq" },
   ]
 
@@ -162,11 +161,6 @@ export const HomeView = () => {
               </div>
             ))}
           </div>
-        </section>
-
-        <section id="pricing" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-2 md:mb-12">Pricing</h2>
-          <UpgradeView />
         </section>
 
         <section id="faq" className="max-w-4xl mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
