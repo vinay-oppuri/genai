@@ -31,7 +31,7 @@ export const DashboardNavbar = () => {
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
 
-      <nav className="sticky top-1 md:top-0 z-40 mx-1 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-md p-4 md:py-3 rounded-full md:rounded-none">
+      <nav className="sticky top-1 md:top-0 z-40 mx-1 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-md px-4 py-3 rounded-full md:rounded-none">
 
         {/* LEFT SECTION */}
         <div className="flex items-center gap-3">
@@ -60,15 +60,15 @@ export const DashboardNavbar = () => {
           <Link href='/' className="md:hidden relative cursor-pointer">
             <Image
               src="/logo.svg"
-              height={36}
-              width={36}
+              height={32}
+              width={32}
               alt="Meet.AI"
-              className="filter drop-shadow-md brightness-110 dark:brightness-125 not-md:ml-2"
+              className="filter drop-shadow-md brightness-110 dark:brightness-125 ml-2 md:ml-0"
             />
-            <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow not-md:ml-2" />
+            <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
           </Link>
 
-          <Link href='/' className="md:hidden text-xl font-semibold">Meet<span className="text-green-500">.AI</span></Link>
+          <Link href='/' className="md:hidden text-lg font-semibold">Meet<span className="text-green-500">.AI</span></Link>
         </div>
 
         {/* RIGHT SECTION (Only on Mobile) */}

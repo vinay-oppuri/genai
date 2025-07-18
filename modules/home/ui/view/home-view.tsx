@@ -45,18 +45,18 @@ export const HomeView = () => {
   return (
     <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden">
 
-      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 p-3 md:p-4 rounded-full md:rounded-none">
+      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 px-4 py-3 rounded-full md:rounded-none">
         <div className="flex items-center justify-between md:mx-auto md:max-w-6xl">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link href="/" className="flex relative cursor-pointer">
               <Image
                 src="/logo.svg"
                 height={32}
                 width={32}
                 alt="Meet.AI"
-                className="filter drop-shadow-md brightness-110 dark:brightness-125"
+                className="filter drop-shadow-md brightness-110 dark:brightness-125 ml-2 md:ml-0"
               />
-              <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow" />
+              <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
             </Link>
             <div className="text-foreground text-lg sm:text-xl font-semibold">
               Meet<span className="text-green-500">.AI</span>
@@ -65,7 +65,7 @@ export const HomeView = () => {
 
 
 
-          <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-6 py-2">
+          <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg">
             {headers.map((item) => (
               <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform duration-200">
                 {item.label}
