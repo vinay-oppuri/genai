@@ -37,7 +37,7 @@ export const DashboardNavbar = () => {
         <div className="flex items-center gap-3">
           {/* Desktop: Search bar + Menu button */}
           <Button
-            className="hidden md:flex size-9 border border-border shadow-primary/40 shadow-xs rounded-full"
+            className="hidden md:flex size-9 border border-border shadow-primary/30 shadow-xs rounded-full"
             variant="ghost"
             onClick={toggleSidebar}
           >
@@ -48,7 +48,7 @@ export const DashboardNavbar = () => {
             onClick={() => setCommandOpen((open) => !open)}
             variant="outline"
             size="sm"
-            className="hidden md:flex h-9 w-60 shadow-primary/40 justify-start font-normal shadow-xs rounded-full"
+            className="hidden md:flex h-9 w-60 justify-start font-normal rounded-full"
           >
             <SearchIcon className="mr-2"  size="16" /> Search
             <kbd className="ml-auto pointer-events-none inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">

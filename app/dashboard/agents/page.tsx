@@ -16,7 +16,7 @@ interface Props {
   searchParams: Promise<SearchParams>
 }
 
-const Page = async ( {searchParams} : Props ) => {
+const Page = async ({ searchParams }: Props) => {
   const filters = await loadSearchParams(searchParams)
 
   const session = await auth.api.getSession({
@@ -36,9 +36,7 @@ const Page = async ( {searchParams} : Props ) => {
     <>
       <AgentsListHeader />
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense
-          fallback={<AgentsViewLoading />}
-        >
+        <Suspense fallback={<AgentsViewLoading />}>
           <ErrorBoundary fallback={<AgentsViewError />}>
             <AgentsView />
           </ErrorBoundary>

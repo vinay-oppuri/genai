@@ -17,7 +17,6 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { ChevronDownIcon, CreditCardIcon, LogOut, LogOutIcon, User } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import { AvatarFallback } from '@/components/ui/avatar'
 
 export const DashboardUserButton = () => {
@@ -69,7 +68,7 @@ export const DashboardUserButton = () => {
 
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between bg-background/50 overflow-hidden'>
+            <DropdownMenuTrigger className='rounded-lg border border-border/10 p-3 gap-2 w-full flex items-center justify-between text-white overflow-hidden'>
                 {data.user.image ? (
                     <Avatar>
                         <AvatarImage src={data.user.image} className='size-9 rounded-full' />

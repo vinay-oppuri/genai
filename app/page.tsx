@@ -1,5 +1,4 @@
-import HomeView from "@/modules/home/ui/view/home-view";
-
+import { HomeView } from "@/modules/home/ui/view/home-view";
 
 const Home = () => {
   return <HomeView/>

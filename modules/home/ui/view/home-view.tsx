@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 
-export default function HomeView() {
+export const HomeView = () => {
   const { data: session } = useSession()
   const { setTheme, theme } = useTheme()
 

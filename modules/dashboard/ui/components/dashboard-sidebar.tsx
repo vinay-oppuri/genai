@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils"
 import { DashboardUserButton } from "./dashboard-user-button"
 import { Button } from "@/components/ui/button"
 import { DashboardTrial } from "./dashboard-trial"
+import { useEffect, useState } from "react"
 
 const firstSection = [
   { icon: LayoutDashboardIcon, label: "Dashboard", href: "/dashboard" },
@@ -42,10 +43,17 @@ export const DashboardSidebar = () => {
   const { theme, setTheme } = useTheme()
   const { isMobile, setOpenMobile } = useSidebar()
 
+
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null 
+
   return (
     <Sidebar>
-      
-      {/* Logo & Brand */}
       <SidebarHeader className="flex items-center mt-6 mb-4 px-4 mr-2">
         <Link
           href="/"
@@ -69,7 +77,7 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 rounded-lg border border-transparent hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-105",
+                      "h-10 rounded-lg px-4 border border-transparent hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-105",
                       pathname === item.href && "bg-primary/10 text-primary font-semibold shadow-primary/10 shadow-xl"
                     )}
                     isActive={pathname === item.href}
@@ -89,7 +97,6 @@ export const DashboardSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Secondary Links */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -98,7 +105,7 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 rounded-lg border border-transparent hover:bg-yellow-400/10 hover:text-yellow-500 transition-all duration-300 hover:scale-105",
+                      "h-10 rounded-lg px-4 border border-transparent hover:bg-yellow-400/10 hover:text-yellow-500 transition-all duration-300 hover:scale-105",
                       pathname === item.href && "bg-yellow-400/10 text-yellow-600 font-semibold shadow-primary/10 shadow-xl"
                     )}
                     isActive={pathname === item.href}
@@ -117,7 +124,6 @@ export const DashboardSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Theme Toggle */}
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -136,9 +142,8 @@ export const DashboardSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      {/* Footer */}
       <SidebarFooter className="text-foreground py-4">
-        <DashboardTrial/>
+        {!isMobile && <DashboardTrial/>}
         <DashboardUserButton />
       </SidebarFooter>
     </Sidebar>
