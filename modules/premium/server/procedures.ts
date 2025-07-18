@@ -41,6 +41,8 @@ export const premiumRouter = createTRPCRouter({
             isRecurring: true,
             sorting: ["price_amount"]
         })
+        
+        return products.result.items
     }),
 
     getCurrentSubscription: protectedProcedure.query(async ({ctx}) => {

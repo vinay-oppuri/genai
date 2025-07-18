@@ -6,10 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-const pricingCardVariants = cva("rounded-lg p-4 py-6 w-full", {
+const pricingCardVariants = cva("rounded-2xl px-6 py-10 w-full max-w-md mx-auto", {
     variants: {
         variant: {
-            default: "bg-white text-black",
+            default: "bg-background text-foreground shadow-lg border",
             highlighted: "bg-linear-to-br from-[#093C23] to-[#051B16] text-white",
         }
     },
@@ -21,8 +21,8 @@ const pricingCardVariants = cva("rounded-lg p-4 py-6 w-full", {
 const pricingCardIconVariants = cva("size-5", {
     variants: {
         variant: {
-            default: "fill-primary",
-            highlighted: "fill-white text-black",
+            default: "fill-primary text-white dark:text-green-600",
+            highlighted: "fill-white text-primary dark:text-green-600",
         }
     },
     defaultVariants: {
@@ -33,13 +33,13 @@ const pricingCardIconVariants = cva("size-5", {
 const pricingCardSecondaryTextVariables = cva("text-neutral-700", {
     variants: {
         variant: {
-            default: "text-neutral-700",
-            highlighted: "text-neutral-700"
+            default: "text-muted-foreground",
+            highlighted: "text-muted-foreground"
         }
     }
 })
 
-const pricingCardBadgeVariants = cva ("text-black text-xs font-normal p-1", {
+const pricingCardBadgeVariants = cva("text-black text-xs font-normal p-1", {
     variants: {
         variant: {
             default: "bg-primary/20",
@@ -74,56 +74,65 @@ export const PricingCard = ({
     className,
     buttonText,
     onClick
-} : Props) => {
+}: Props) => {
 
     return (
-        <div className={cn(pricingCardVariants({variant}), className, "border")}>
-            <div className="flex items-end justify-between gap-x-4">
-                <div className="flex flex-col gap-y-2">
-                    <div className="flex items-center gap-x-2">
-                        <h6 className="font-medium text-xl">{title}</h6>
-                        {badge ? (
-                            <Badge className={cn(pricingCardBadgeVariants({variant}))}>
-                                {badge}
-                            </Badge>
-                        ) : null}
+        <div className={cn(pricingCardVariants({ variant }), className)}>
+            <div className="flex flex-col gap-6">
+                <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-col gap-1.5">
+                        <div className="flex items-center gap-2">
+                            <h6 className="font-semibold text-xl">{title}</h6>
+                            {badge ? (
+                                <Badge className={cn(pricingCardBadgeVariants({ variant }))}>
+                                    {badge}
+                                </Badge>
+                            ) : null}
+                        </div>
+                        {description && (
+                            <p className={cn("text-sm", pricingCardSecondaryTextVariables({ variant }))}>
+                                {description}
+                            </p>
+                        )}
                     </div>
-                    <p className={cn("text-xs", pricingCardSecondaryTextVariables({variant}))}>
-                        {description}
-                    </p>
+                    <div className="flex items-end gap-1 shrink-0">
+                        <h4 className="text-2xl font-bold">
+                            {Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                minimumFractionDigits: 0,
+                            }).format(price)}
+                        </h4>
+                        <span className={cn("text-sm", pricingCardSecondaryTextVariables({ variant }))}>
+                            {priceSuffix}
+                        </span>
+                    </div>
                 </div>
-                <div className="flex items-end shrink-0 gap-x-0.5">
-                    <h4>
-                        {Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                            minimumFractionDigits: 0,
-                        }).format(price)}
-                    </h4>
-                    <span className={cn(pricingCardSecondaryTextVariables({variant}))}>
-                        {priceSuffix}
-                    </span>
-                </div>
-            </div>
-            <div>
-                <Separator className="opacity-10 text-[#5D6B68]"/>
-            </div>
-            <Button className="w-full" size="lg" variant={variant === "highlighted" ? "default" : "outline"} onClick={onClick}>
-                {buttonText}
-            </Button>
-            <div className="flex flex-col gap-y-2 mt-6">
-                <p className="font-medium uppercase">Features</p>
-                <ul
-                    className={cn("flex flex-col gap-y-2.5", pricingCardSecondaryTextVariables({variant}))}
+
+                <Separator className="text-muted-foreground" />
+
+                <Button
+                    className="w-full text-sm font-medium shadow-lg shadow-primary/40"
+                    size="lg"
+                    variant={variant === "highlighted" ? "default" : "outline"}
+                    onClick={onClick}
                 >
-                    {features?.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-x-2.5">
-                            <CircleCheckIcon className={cn(pricingCardIconVariants)} />
-                            {feature}
-                        </li>
-                    ))}
-                </ul>
+                    {buttonText}
+                </Button>
+
+                <div className="flex flex-col gap-3 mt-4">
+                    <p className="font-semibold uppercase text-sm tracking-wide">Features</p>
+                    <ul className={cn("flex flex-col gap-2 text-sm", pricingCardSecondaryTextVariables({ variant }))}>
+                        {features?.map((feature, index) => (
+                            <li key={index} className="flex items-start gap-2.5">
+                                <CircleCheckIcon className={cn(pricingCardIconVariants({ variant }))} />
+                                <span>{feature}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         </div>
+
     )
 }

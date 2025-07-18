@@ -34,7 +34,7 @@ const firstSection = [
 ]
 
 const secondSection = [
-  { icon: StarIcon, label: "Upgrade", href: "/upgrade" },
+  { icon: StarIcon, label: "Upgrade", href: "/dashboard/upgrade" },
 ]
 
 export const DashboardSidebar = () => {
