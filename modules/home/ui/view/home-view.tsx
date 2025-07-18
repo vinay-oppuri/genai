@@ -65,7 +65,7 @@ export const HomeView = () => {
 
 
 
-          <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg">
+          <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-5 py-3">
             {headers.map((item) => (
               <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform duration-200">
                 {item.label}
