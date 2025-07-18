@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-const pricingCardVariants = cva("rounded-2xl px-6 py-10 w-[90%] mx-auto max-w-md transition-all hover:scale-103 duration-300", {
+const pricingCardVariants = cva("rounded-2xl px-6 py-10 w-[90%] mx-auto max-w-md overflow-x-hidden transition-all hover:scale-103 duration-300", {
     variants: {
         variant: {
             default: "bg-background text-foreground shadow-lg border",

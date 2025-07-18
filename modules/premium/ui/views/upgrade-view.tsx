@@ -40,7 +40,7 @@ export const UpgradeView = () => {
     return (
         <div className="flex-1 flex flex-col gap-y-10 py-4 px-4 md:px-8">
             <div className="flex-1 flex flex-col items-center mt-4 gap-y-10">
-                <h5 className="font-medium text-2xl md:text-3xl">
+                <h5 className="font-medium text-foreground text-2xl md:text-3xl">
                     You are on the {' '}
                     <span className="font-bold text-green-600">
                         {currentSubscription?.name ?? "Free"}
