@@ -74,7 +74,7 @@ export const HomeView = () => {
           </nav>
 
           <div className="flex items-center gap-2 text-foreground">
-            <Link href="/dashboard">
+            <Link href="/sign-in">
               <Button className="rounded-full text-sm px-4 py-2 bg-primary/80 backdrop-blur-xs">
                 Get Started
               </Button>
@@ -138,7 +138,7 @@ export const HomeView = () => {
             </div>
           </div>
 
-          <div className="flex-1 w-full flex justify-center md:justify-end">
+          <div className="hidden flex-1 w-full md:flex justify-center md:justify-end">
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px]">
               <Image
                 src="/agent.jpg"
@@ -155,7 +155,7 @@ export const HomeView = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-muted-foreground">
             {features.map((feat) => (
-              <div key={feat.title} className="bg-primary dark:bg-muted text-white px-6 py-5 rounded-2xl transition-all duration-300 hover:scale-105">
+              <div key={feat.title} className="bg-primary dark:bg-accent/40 text-white px-6 py-5 rounded-2xl transition-all duration-300 hover:scale-105">
                 <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
                 <p className="text-sm md:text-base">{feat.desc}</p>
               </div>
