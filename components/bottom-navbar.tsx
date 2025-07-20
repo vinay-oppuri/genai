@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, VideoIcon, BotIcon, StarIcon, Sun, Moon, LayoutDashboardIcon } from "lucide-react"
+import { Home, VideoIcon, BotIcon, LayoutDashboardIcon } from "lucide-react"
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
