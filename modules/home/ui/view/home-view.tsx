@@ -12,16 +12,18 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion";
+import { container, fadeUp, floatY, scaleIn } from "@/lib/animations"
 
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
-  const [mounted, setMounted] = useState(false) 
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if(!mounted) return null
+  if (!mounted) return null
 
   const headers = [
     { label: "Home", href: "#home" },
@@ -116,40 +118,47 @@ export const HomeView = () => {
 
 
       <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative z-10">
-        <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between md:border-none md:p-0 py-8 gap-12 md:gap-8">
-          <div className="flex-1 text-center md:text-left space-y-4 sm:space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg">
-              Run Smarter Meetings with <span className="text-green-500">AI Agents</span>
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0">
+        <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-4 py-8 gap-12 md:gap-8 overflow-hidden">
+
+          <motion.div variants={container} initial="hidden" animate="show" className="flex-1 text-center md:text-left space-y-4 sm:space-y-6" >
+            <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg">
+              Run Smarter Meetings with{" "}
+              <span className="text-green-500 animate-pulse">AI Agents</span>
+            </motion.h1>
+
+            <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0">
               Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
-            </p>
-            <div className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start" >
               <Link href="/sign-up">
                 <Button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md shadow-green-500/40 transition-all duration-300 hover:scale-105 w-40">
                   Start Free
                 </Button>
               </Link>
               <Link href="/sign-in">
-                <Button variant="outline" className="border-primary text-primary bg-transparent rounded-full w-40">
+                <Button variant="outline" className="border-primary text-primary bg-transparent rounded-full w-40 hover:border-green-500 hover:text-green-500 transition-colors duration-300">
                   Login
                 </Button>
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          <div className="hidden flex-1 w-full md:flex justify-center md:justify-end">
-            <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px]">
+          {/* Right Side Image */}
+          <motion.div variants={scaleIn} initial="hidden" animate="show" className="hidden md:flex flex-1 w-full justify-center md:justify-end">
+            <motion.div {...floatY(10, 5)}  className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
               <Image
                 src="/agent.jpg"
                 alt="Agent"
                 layout="fill"
                 objectFit="contain"
-                className="rounded-full brightness-75 contrast-125 saturate-150 drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+                className="rounded-full brightness-75 contrast-125 saturate-150 drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+                priority
               />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
+
 
         <section id="features" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
