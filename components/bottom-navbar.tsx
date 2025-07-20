@@ -6,10 +6,10 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const navItems = [
-  { href: '/', icon: Home, label: 'Home' },
-  { href: '/dashboard/agents', icon: BotIcon, label: 'Agents' },
-  { href: '/dashboard/meetings', icon: VideoIcon, label: 'Meetings' },
-  { href: '/dashboard', icon: LayoutDashboardIcon, label: 'Dashboard' },
+  { href: '/', icon: Home },
+  { href: '/dashboard/agents', icon: BotIcon },
+  { href: '/dashboard/meetings', icon: VideoIcon },
+  { href: '/dashboard', icon: LayoutDashboardIcon },
 ]
 
 export default function BottomNav() {
@@ -18,7 +18,7 @@ export default function BottomNav() {
   return (
     <nav className="fixed bottom-1 left-1 right-1 z-50 md:hidden rounded-full border backdrop-blur-md bg-background/70 py-2 px-3">
       <div className="flex justify-between items-center">
-        {navItems.map(({ href, icon: Icon, label }) => {
+        {navItems.map(({ href, icon: Icon }) => {
           const isActive = pathname === href
 
           return (
