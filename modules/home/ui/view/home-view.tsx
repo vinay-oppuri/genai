@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
 import { MenuIcon, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import {
@@ -11,17 +12,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
-import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
-  const [mounted, setMounted] = useState(false) 
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  if(!mounted) return null
+  if (!mounted) return null
 
   const headers = [
     { label: "Home", href: "#home" },
@@ -43,9 +44,14 @@ export const HomeView = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden">
-
-      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 px-4 py-3 rounded-full md:rounded-none">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen bg-background text-gray-100 flex flex-col font-sans relative overflow-x-hidden"
+    >
+      {/* Header */}
+      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 px-4 py-3 rounded-full md:rounded-none">
         <div className="flex items-center justify-between md:mx-auto md:max-w-6xl">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex relative cursor-pointer">
@@ -62,8 +68,6 @@ export const HomeView = () => {
               Meet<span className="text-green-500">.AI</span>
             </div>
           </div>
-
-
 
           <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-5 py-3">
             {headers.map((item) => (
@@ -101,23 +105,30 @@ export const HomeView = () => {
                     <Link href={item.href}>{item.label}</Link>
                   </DropdownMenuItem>
                 ))}
-                {mounted && (<DropdownMenuItem
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="flex justify-between items-center"
-                >
-                  Theme {theme === "dark" ? <Sun className="w-4 h-4 ml-2" /> : <Moon className="w-4 h-4 ml-2" />}
-                </DropdownMenuItem>)}
+                {mounted && (
+                  <DropdownMenuItem
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="flex justify-between items-center"
+                  >
+                    Theme {theme === "dark" ? <Sun className="w-4 h-4 ml-2" /> : <Moon className="w-4 h-4 ml-2" />}
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
       </header>
 
-
-
+      {/* Main Section */}
       <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative z-10">
-        <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-8">
-          <div className="flex-1 text-center md:text-left space-y-4 sm:space-y-6">
+        {/* Hero Section */}
+        <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-8 min-h-screen md:min-h-0">
+          <motion.div
+            className="flex-1 text-center md:text-left space-y-4 sm:space-y-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg">
               Run Smarter Meetings with <span className="text-green-500">AI Agents</span>
             </h1>
@@ -125,20 +136,29 @@ export const HomeView = () => {
               Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start">
-              <Link href="/sign-up">
-                <Button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-full shadow-md shadow-green-500/40 transition-all duration-300 hover:scale-105 w-40">
-                  Start Free
-                </Button>
-              </Link>
-              <Link href="/sign-in">
-                <Button variant="outline" className="border-primary text-primary bg-transparent rounded-full w-40">
-                  Login
-                </Button>
-              </Link>
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Link href="/sign-up">
+                  <Button className="bg-primary font-semibold px-6 py-3 rounded-full shadow-md shadow-primary/40 transition-all duration-300 w-40">
+                    Start Free
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Link href="/sign-in">
+                  <Button variant="outline" className="border-primary text-primary bg-transparent rounded-full w-40">
+                    Login
+                  </Button>
+                </Link>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="hidden flex-1 w-full md:flex justify-center md:justify-end">
+          <motion.div
+            className="hidden flex-1 w-full md:flex justify-center md:justify-end"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.7 }}
+          >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[350px] md:h-[350px] lg:w-[450px] lg:h-[450px]">
               <Image
                 src="/agent.jpg"
@@ -148,33 +168,47 @@ export const HomeView = () => {
                 className="rounded-full brightness-75 contrast-125 saturate-150 drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]"
               />
             </div>
-          </div>
+          </motion.div>
         </section>
 
+        {/* Features Section */}
         <section id="features" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-muted-foreground">
-            {features.map((feat) => (
-              <div key={feat.title} className="bg-primary dark:bg-accent/40 text-white px-6 py-5 rounded-2xl transition-all duration-300 hover:scale-105">
+            {features.map((feat, i) => (
+              <motion.div
+                key={feat.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.15 }}
+                className="bg-primary dark:bg-accent/40 text-white px-6 py-5 rounded-2xl transition-all duration-300 hover:scale-105"
+              >
                 <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
                 <p className="text-sm md:text-base">{feat.desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
 
+        {/* FAQ Section */}
         <section id="faq" className="max-w-4xl mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Frequently Asked Questions</h2>
-          <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-muted px-6 sm:px-10 py-8 rounded-2xl">
-            {faqs.map(({ q, a }) => (
-              <div key={q} className="flex flex-col gap-1">
+          <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-accent/40 px-6 sm:px-10 py-8 rounded-2xl transition-all duration-300 hover:scale-105">
+            {faqs.map(({ q, a }, i) => (
+              <motion.div
+                key={q}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="flex flex-col gap-1"
+              >
                 <h3 className="text-sm md:text-base font-medium text-white">{q}</h3>
                 <p>{a}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </section>
       </main>
-    </div>
+    </motion.div>
   )
 }
