@@ -3,17 +3,12 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { MenuIcon, Moon, Sun } from "lucide-react"
+import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion";
 import { container, fadeUp, floatY, scaleIn } from "@/lib/animations"
+import { Sidebar } from "./sidebar"
 
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
@@ -91,26 +86,7 @@ export const HomeView = () => {
               {theme === "dark" ? <Sun /> : <Moon />}
             </Button>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button size="icon" variant="ghost" className="md:hidden">
-                  <MenuIcon className="w-5 h-5" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-background/70 backdrop-blur-xs font-medium w-40">
-                {headers.map((item) => (
-                  <DropdownMenuItem asChild key={item.href}>
-                    <Link href={item.href}>{item.label}</Link>
-                  </DropdownMenuItem>
-                ))}
-                {mounted && (<DropdownMenuItem
-                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="flex justify-between items-center"
-                >
-                  Theme {theme === "dark" ? <Sun className="w-4 h-4 ml-2" /> : <Moon className="w-4 h-4 ml-2" />}
-                </DropdownMenuItem>)}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex md:hidden"><Sidebar/></div>
           </div>
         </div>
       </header>
