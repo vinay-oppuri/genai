@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, VideoIcon, BotIcon, LayoutDashboardIcon } from "lucide-react"
+import { Home, VideoIcon, BotIcon, LayoutDashboardIcon, StarIcon } from "lucide-react"
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -8,6 +8,7 @@ import Link from 'next/link'
 const navItems = [
   { href: '/', icon: Home },
   { href: '/dashboard/agents', icon: BotIcon },
+  { href: '/dashboard/upgrade', icon: StarIcon },
   { href: '/dashboard/meetings', icon: VideoIcon },
   { href: '/dashboard', icon: LayoutDashboardIcon },
 ]

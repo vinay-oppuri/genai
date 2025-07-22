@@ -6,7 +6,6 @@ import "./globals.css";
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from 'sonner';
 import { ThemeProvider } from "next-themes";
-import BottomNav from "@/components/bottom-navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,7 +25,6 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
           <TRPCReactProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               {children}
-              <BottomNav/>
               <Toaster />
             </ThemeProvider>
           </TRPCReactProvider>

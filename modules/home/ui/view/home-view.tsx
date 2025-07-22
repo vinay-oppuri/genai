@@ -72,7 +72,7 @@ export const HomeView = () => {
 
           <div className="flex items-center gap-2 text-foreground">
             <Link href="/sign-in">
-              <Button className="rounded-full text-sm px-4 py-2 bg-primary/80 backdrop-blur-xs">
+              <Button className="rounded-full text-sm px-4 py-2 backdrop-blur-xs">
                 Get Started
               </Button>
             </Link>
