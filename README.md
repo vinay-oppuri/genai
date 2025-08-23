@@ -1,8 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MeetAI  
 
-## Getting Started
+MeetAI is a Next.js application that allows users to create AI agents, schedule meetings, receive automatic summaries once meetings conclude, and ask follow-up questions based on the meeting content.  
 
-First, run the development server:
+## 🚀 Getting Started  
+
+Run the development server:  
 
 ```bash
 npm run dev
@@ -13,24 +15,41 @@ pnpm dev
 # or
 bun dev
 ```
+Open http://localhost:3000
+ to view the app.
+You can start editing by modifying app/page.tsx, changes update automatically.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create and manage AI agents
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Schedule and track meetings
 
-## Learn More
+Auto-generate meeting summaries
 
-To learn more about Next.js, take a look at the following resources:
+Post-meeting Q&A
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Next.js
+ – React framework for building apps
 
-## Deploy on Vercel
+TypeScript
+ – Type-safe development
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+next/font
+ with Geist
+ – optimized typography
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+TRPC, Drizzle ORM, Inngest (planned integrations)
+
+## 📚 Learn More
+
+Next.js Documentation
+
+Interactive Next.js Tutorial
+
+## 🚢 Deployment
+
+Deploy easily with Vercel.
+See Next.js deployment docs for details.
