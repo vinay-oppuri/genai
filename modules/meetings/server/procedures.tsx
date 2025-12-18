@@ -313,15 +313,68 @@ export const meetingsRouter = createTRPCRouter({
             return transcriptWithSpeakers
         }),
 
+    // JOIN AGENT PROCEDURE
+    joinAgent: protectedProcedure
+        .input(z.object({ meetingId: z.string() }))
+        .mutation(async ({ input, ctx }) => {
+            const [existingMeeting] = await db
+                .select()
+                .from(meetings)
+                .where(
+                    and(
+                        eq(meetings.id, input.meetingId),
+                        eq(meetings.userId, ctx.auth.user.id)
+                    )
+                )
+
+            if (!existingMeeting) {
+                throw new TRPCError({ code: "NOT_FOUND", message: "Meeting not found" })
+            }
+
+            const [existingAgent] = await db
+                .select()
+                .from(agents)
+                .where(eq(agents.id, existingMeeting.agentId))
+
+            if (!existingAgent) {
+                throw new TRPCError({ code: "NOT_FOUND", message: "Agent not found" })
+            }
+
+            const call = streamVideo.video.call("default", input.meetingId)
+
+            try {
+                const realtimeClient = await streamVideo.video.connectOpenAi({
+                    call,
+                    openAiApiKey: process.env.OPENAI_API_KEY!,
+                    agentUserId: existingAgent.id
+                })
+
+                await realtimeClient.updateSession({
+                    instructions: existingAgent.instructions
+                })
+
+                return { success: true }
+            } catch (error) {
+                console.error("Error connecting OpenAI agent:", error)
+                // @ts-ignore
+                const errorMessage = error?.message || "Unknown error";
+                console.error("Full error details:", JSON.stringify(error, null, 2));
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR",
+                    message: `Failed to connect agent: ${errorMessage}`
+                })
+            }
+        }),
+
     // GENERATE CHAT TOKEN PROCEDURE
     generateChatToken: protectedProcedure.mutation(async ({ ctx }) => {
-            const token = streamChat.createToken(ctx.auth.user.id)
-            await streamChat.upsertUser({
-                id: ctx.auth.user.id,
-                role: "admin"
-            })
-
-            return token
+        const token = streamChat.createToken(ctx.auth.user.id)
+        await streamChat.upsertUser({
+            id: ctx.auth.user.id,
+            role: "admin"
         })
+
+        return token
+    })
 
 })

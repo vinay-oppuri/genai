@@ -61,20 +61,20 @@ export const premiumProcedure = (entity: "meetings" | "agents") =>
     const isPremium = customer.activeSubscriptions.length > 0
 
     const isFreeAgentLimitReached = userAgents.count >= MAX_FREE_AGENTS
-    const isFreeMeetingLimitReached = userAgents.count >= MAX_FREE_MEETINGS
+    const isFreeMeetingLimitReached = userMeetings.count >= MAX_FREE_MEETINGS
 
-    const shouldThrowAgentError = 
+    const shouldThrowAgentError =
       entity === "agents" && isFreeAgentLimitReached && !isPremium
-    const shouldThrowMeetingError = 
+    const shouldThrowMeetingError =
       entity === "meetings" && isFreeMeetingLimitReached && !isPremium
 
-    if(shouldThrowAgentError) {
-      throw new TRPCError({code: "FORBIDDEN", message: "You have reached the maximum number of free agents"})
+    if (shouldThrowAgentError) {
+      throw new TRPCError({ code: "FORBIDDEN", message: "You have reached the maximum number of free agents" })
     }
 
-    if(shouldThrowMeetingError) {
-      throw new TRPCError({code: "FORBIDDEN", message: "You have reached the maximum number of free meetings"})
+    if (shouldThrowMeetingError) {
+      throw new TRPCError({ code: "FORBIDDEN", message: "You have reached the maximum number of free meetings" })
     }
 
-    return next({ctx: {...ctx, customer}})
+    return next({ ctx: { ...ctx, customer } })
   })

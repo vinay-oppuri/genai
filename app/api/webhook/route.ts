@@ -1,6 +1,6 @@
-import OpenAI from "openai"
+
 import { and, eq, not } from "drizzle-orm"
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs"
+import { ChatCompletionMessageParam } from "openai/resources/chat/completions"
 
 import {
     MessageNewEvent,
@@ -19,7 +19,7 @@ import { inngest } from "@/inngest/client"
 import { GenerateAvatarUri } from "@/lib/avatar"
 import { streamChat } from "@/lib/stream-chat"
 
-const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// const openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 function verifySignatureWithSDK(body: string, signature: string): boolean {
     return streamVideo.verifyWebhook(body, signature)
@@ -49,10 +49,13 @@ export async function POST(req: NextRequest) {
     const eventType = (payload as Record<string, unknown>)?.type
 
     if (eventType === "call.session_started") {
+        console.log("Webhook: call.session_started triggered");
         const event = payload as CallSessionStartedEvent
         const meetingId = event.call.custom?.meetingId
+        console.log("Webhook: meetingId from payload:", meetingId);
 
         if (!meetingId) {
+            console.error("Webhook: Missing meetingId");
             return NextResponse.json({ error: "Missing meetingId" })
         }
 
@@ -69,6 +72,13 @@ export async function POST(req: NextRequest) {
                 )
             )
 
+        console.log("Webhook: Existing meeting found:", !!existingMeeting);
+
+        if (!existingMeeting) {
+            console.log("Webhook: Meeting not found or already active/completed");
+            return NextResponse.json({ status: "ignored" })
+        }
+
         await db
             .update(meetings)
             .set({
@@ -83,20 +93,29 @@ export async function POST(req: NextRequest) {
             .from(agents)
             .where(eq(agents.id, existingMeeting.agentId))
 
+        console.log("Webhook: Existing agent found:", !!existingAgent, existingAgent?.id);
+
         if (!existingAgent) {
+            console.error("Webhook: Agent not found");
             return NextResponse.json({ error: "Agent not found" }, { status: 404 })
         }
 
         const call = streamVideo.video.call("default", meetingId)
-        const realtimeClient = await streamVideo.video.connectOpenAi({
-            call,
-            openAiApiKey: process.env.OPENAI_API_KEY!,
-            agentUserId: existingAgent.id
-        })
+        console.log("Webhook: Connecting OpenAI...");
+        try {
+            const realtimeClient = await streamVideo.video.connectOpenAi({
+                call,
+                openAiApiKey: process.env.OPENAI_API_KEY!,
+                agentUserId: existingAgent.id
+            })
+            console.log("Webhook: OpenAI connected successfully");
 
-        realtimeClient.updateSession({
-            instructions: existingAgent.instructions
-        })
+            realtimeClient.updateSession({
+                instructions: existingAgent.instructions
+            })
+        } catch (error) {
+            console.error("Webhook: Error connecting OpenAI:", error);
+        }
     } else if (eventType === "call.session_participant_left") {
         const event = payload as CallSessionParticipantLeftEvent
         const meetingId = event.call_cid.split(":")[1]
@@ -223,22 +242,30 @@ export async function POST(req: NextRequest) {
                     content: message.text || ""
                 }))
 
-            const GPTResponse = await openaiClient.chat.completions.create({
-                messages: [
-                    {role: "system", content: instructions},
-                    ...previousMessages,
-                    {role: "user", content: text},
-                ],
-                model: "gpt-4o",
-            })
+            const geminiResponse = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                role: "user",
+                                parts: [{ text: instructions + "\n\n" + previousMessages.map(m => `${m.role}: ${m.content}`).join("\n") + "\n\nuser: " + text }]
+                            }
+                        ]
+                    })
+                }
+            )
 
-            const GPTResponseText = GPTResponse.choices[0].message.content
+            const result = await geminiResponse.json()
+            const GPTResponseText = result?.candidates?.[0]?.content?.parts?.[0]?.text
 
-            if(!GPTResponseText) {
-                return NextResponse.json({error: "No response from GPT"}, {status: 400})
+            if (!GPTResponseText) {
+                return NextResponse.json({ error: "No response from Gemini" }, { status: 400 })
             }
 
-            const avatarUrl = GenerateAvatarUri({seed: existingAgent.name, variant: "botttsNeutral"})
+            const avatarUrl = GenerateAvatarUri({ seed: existingAgent.name, variant: "botttsNeutral" })
 
             streamChat.upsertUser({
                 id: existingAgent.id,
@@ -249,7 +276,7 @@ export async function POST(req: NextRequest) {
             channel.sendMessage({
                 text: GPTResponseText,
                 user: {
-                    id: existingAgent.id, 
+                    id: existingAgent.id,
                     name: existingAgent.name,
                     image: avatarUrl
                 }

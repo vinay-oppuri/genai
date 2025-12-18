@@ -108,12 +108,12 @@ export const HomeView = () => {
 
             <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start" >
               <Link href="/sign-up">
-                <Button className="bg-primary text-background font-semibold px-6 py-3 rounded-full shadow-lg shadow-primary/40 transition-all duration-300 hover:scale-105 w-40">
-                  Start Free
+                <Button className="bg-primary text-background font-semibold p-5 rounded-full">
+                  Create your first meeting
                 </Button>
               </Link>
               <Link href="/sign-in">
-                <Button variant="outline" className="border-primary text-primary rounded-full w-40">
+                <Button variant="outline" className="border-primary p-5 text-primary rounded-full w-25">
                   Login
                 </Button>
               </Link>
@@ -140,7 +140,7 @@ export const HomeView = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-white dark:text-muted-foreground">
             {features.map((feat) => (
-              <div key={feat.title} className="bg-primary dark:bg-accent/40 px-6 py-5 rounded-2xl transition-all duration-300 hover:scale-105">
+              <div key={feat.title} className="bg-primary dark:bg-accent/40 px-6 py-5 rounded-2xl hover:shadow-lg hover:invert:shadow-primary/20 hover:border invert:hover:border-primary/10">
                 <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
                 <p className="text-sm md:text-base">{feat.desc}</p>
               </div>
@@ -152,7 +152,7 @@ export const HomeView = () => {
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Frequently Asked Questions</h2>
           <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-accent/40 px-6 sm:px-10 py-8 rounded-2xl">
             {faqs.map(({ q, a }) => (
-              <div key={q} className="flex flex-col gap-1 transition-all duration-300 hover:scale-105">
+              <div key={q} className="flex flex-col gap-1">
                 <h3 className="text-sm md:text-base font-medium text-white">{q}</h3>
                 <p>{a}</p>
               </div>

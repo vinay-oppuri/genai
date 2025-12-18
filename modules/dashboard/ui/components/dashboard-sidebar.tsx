@@ -77,8 +77,8 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 rounded-lg px-4 border border-transparent hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-105",
-                      pathname === item.href && "bg-primary/10 text-primary font-semibold shadow-primary/10 shadow-xl"
+                      "h-10 rounded-lg px-4 border border-transparent hover:bg-primary/10 hover:text-primary",
+                      pathname === item.href && "bg-primary/10 text-primary font-semibold"
                     )}
                     isActive={pathname === item.href}
                   >
@@ -105,8 +105,8 @@ export const DashboardSidebar = () => {
                   <SidebarMenuButton
                     asChild
                     className={cn(
-                      "h-10 rounded-lg px-4 border border-transparent hover:bg-yellow-400/10 hover:text-yellow-500 transition-all duration-300 hover:scale-105",
-                      pathname === item.href && "bg-yellow-400/10 text-yellow-600 font-semibold shadow-primary/10 shadow-xl"
+                      "h-10 rounded-lg px-4 border border-transparent hover:bg-yellow-400/10 hover:text-yellow-500",
+                      pathname === item.href && "bg-yellow-400/10 text-yellow-600 font-semibold"
                     )}
                     isActive={pathname === item.href}
                   >
