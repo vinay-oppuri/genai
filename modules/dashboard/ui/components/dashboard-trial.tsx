@@ -35,7 +35,7 @@ export const DashboardTrial = () => {
                 </div>
             </div>
             <Button asChild className="bg-transparent text-white border-t border-border/10 hover:bg-white/10 rounded-t-none">
-                <Link href='/upgrade'>Upgrade</Link>
+                <Link href='/dashboard/upgrade'>Upgrade</Link>
             </Button>
         </div>
     )

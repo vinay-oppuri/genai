@@ -9,8 +9,9 @@ import { useTRPC } from "@/trpc/client"
 import { useFreeLimits } from "@/modules/premium/constants"
 import { LoadingState } from "@/components/loading-state"
 import { ErrorState } from "@/components/error-state"
+import { useMemo, memo } from "react"
 
-export const DashboardView = () => {
+export const DashboardView = memo(() => {
     const { data: session } = useSession()
     const trpc = useTRPC()
 
@@ -21,11 +22,11 @@ export const DashboardView = () => {
     const totalMeetings = meetingsData?.total ?? 0
     const totalAgents = agentsData?.total ?? 0
 
-    const testData = [
+    const testData = useMemo(() => [
         { title: "Total Agents", value: totalAgents, max: agentLimit },
         { title: "Total Meetings", value: totalMeetings, max: meetingLimit },
         { title: "AI Tasks Today", value: 18, max: "" },
-    ]
+    ], [totalAgents, agentLimit, totalMeetings, meetingLimit])
 
     return (
         <div className="min-h-screen bg-background px-6 py-10 text-foreground font-sans space-y-10 transition-all">
@@ -96,7 +97,7 @@ export const DashboardView = () => {
             </section>
         </div>
     )
-}
+})
 
 export const DashboardViewLoading = () => {
     return (

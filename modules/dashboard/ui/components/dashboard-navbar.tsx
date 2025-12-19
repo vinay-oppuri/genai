@@ -31,14 +31,15 @@ export const DashboardNavbar = () => {
     <>
       <DashboardCommand open={commandOpen} setOpen={setCommandOpen} />
 
-      <nav className="sticky top-1 md:top-0 z-40 mx-1 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs shadow-md px-4 py-3 rounded-full md:rounded-none">
+      <nav className="sticky top-1 md:top-0 z-40 mx-1 md:mx-0 flex justify-between items-center bg-background/70 border md:border-b backdrop-blur-xs px-4 py-3 rounded-full md:rounded-none">
 
         {/* LEFT SECTION */}
         <div className="flex items-center gap-3">
           {/* Desktop: Search bar + Menu button */}
           <Button
-            className="hidden md:flex size-9 border border-border shadow-primary/10 shadow-sm rounded-full"
-            variant="ghost"
+            className="hidden md:flex"
+            variant="outline"
+            size="icon"
             onClick={toggleSidebar}
           >
             <MenuIcon size="16" />
@@ -48,7 +49,7 @@ export const DashboardNavbar = () => {
             onClick={() => setCommandOpen((open) => !open)}
             variant="outline"
             size="sm"
-            className="hidden md:flex h-9 w-60 justify-start font-normal rounded-full"
+            className="hidden md:flex h-9 w-60 justify-start"
           >
             <SearchIcon className="mr-2" size="16" /> Search
             <kbd className="ml-auto pointer-events-none inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">

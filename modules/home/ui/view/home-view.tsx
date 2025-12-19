@@ -8,7 +8,27 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion";
 import { container, fadeUp, floatY, scaleIn } from "@/lib/animations"
-import { Sidebar } from "./sidebar"
+import dynamic from "next/dynamic";
+const Sidebar = dynamic(() => import("./sidebar").then((m) => m.Sidebar), { ssr: false });
+
+const HEADERS = [
+  { label: "Home", href: "#home" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "/dashboard/upgrade" },
+  { label: "FAQ", href: "#faq" },
+];
+
+const FEATURES = [
+  { title: "Unlimited Agents", desc: "Create as many AI agents as you need to manage your meetings." },
+  { title: "Intelligent Summaries", desc: "Receive clear, actionable summaries and decisions post-meeting." },
+  { title: "Agent Assignment", desc: "Assign AI agents to meetings to handle notes, tasks, and follow-ups." },
+];
+
+const FAQS = [
+  { q: "Can I cancel my plan anytime?", a: "Yes, you can cancel your subscription at any time from your dashboard." },
+  { q: "What does '2 months free' mean?", a: "If you choose the yearly plan, you get 12 months for the price of 10 months." },
+  { q: "Is there a team discount?", a: "For enterprise teams or special requests, reach out via our contact form for custom pricing." },
+];
 
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
@@ -20,24 +40,6 @@ export const HomeView = () => {
 
   if (!mounted) return null
 
-  const headers = [
-    { label: "Home", href: "#home" },
-    { label: "Features", href: "#features" },
-    { label: "Pricing", href: "/dashboard/upgrade" },
-    { label: "FAQ", href: "#faq" },
-  ]
-
-  const features = [
-    { title: "Unlimited Agents", desc: "Create as many AI agents as you need to manage your meetings." },
-    { title: "Intelligent Summaries", desc: "Receive clear, actionable summaries and decisions post-meeting." },
-    { title: "Agent Assignment", desc: "Assign AI agents to meetings to handle notes, tasks, and follow-ups." },
-  ]
-
-  const faqs = [
-    { q: "Can I cancel my plan anytime?", a: "Yes, you can cancel your subscription at any time from your dashboard." },
-    { q: "What does '2 months free' mean?", a: "If you choose the yearly plan, you get 12 months for the price of 10 months." },
-    { q: "Is there a team discount?", a: "For enterprise teams or special requests, reach out via our contact form for custom pricing." },
-  ]
 
   return (
     <div className="min-h-screen bg-backgroundflex flex-col font-sans relative overflow-x-hidden">
@@ -52,18 +54,19 @@ export const HomeView = () => {
                 width={32}
                 alt="Meet.AI"
                 className="filter drop-shadow-md brightness-110 dark:brightness-125 ml-2 md:ml-0"
+                priority
               />
               <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
             </Link>
             <div className="text-foreground text-lg sm:text-xl font-semibold">
-              Meet<span className="text-green-500">.AI</span>
+              Meet<span className="text-primary">.AI</span>
             </div>
           </div>
 
 
 
           <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-5 py-3">
-            {headers.map((item) => (
+            {HEADERS.map((item) => (
               <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform duration-200">
                 {item.label}
               </Link>
@@ -83,10 +86,10 @@ export const HomeView = () => {
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="hidden md:flex"
             >
-              {theme === "dark" ? <Sun className="text-yellow-400"/> : <Moon className="text-blue-500"/>}
+              {theme === "dark" ? <Sun className="text-yellow-400" /> : <Moon className="text-blue-500" />}
             </Button>
 
-            <div className="flex md:hidden"><Sidebar/></div>
+            <div className="flex md:hidden"><Sidebar /></div>
           </div>
         </div>
       </header>
@@ -97,12 +100,12 @@ export const HomeView = () => {
         <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-4 py-8 gap-12 md:gap-8 overflow-hidden">
 
           <motion.div variants={container} initial="hidden" animate="show" className="flex-1 text-center md:text-left space-y-4 sm:space-y-6" >
-            <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg">
+            <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg will-change-transform">
               Run Smarter Meetings with{" "}
-              <span className="text-green-500 animate-pulse">AI Agents</span>
+              <span className="text-primary animate-pulse">AI Agents</span>
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0">
+            <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0 will-change-transform">
               Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
             </motion.p>
 
@@ -122,7 +125,7 @@ export const HomeView = () => {
 
           {/* Right Side Image */}
           <motion.div variants={scaleIn} initial="hidden" animate="show" className="hidden md:flex flex-1 w-full justify-center md:justify-end">
-            <motion.div {...floatY(10, 5)}  className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
+            <motion.div {...floatY(10, 5)} className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
               <Image
                 src="/agent.jpg"
                 alt="Agent"
@@ -139,7 +142,7 @@ export const HomeView = () => {
         <section id="features" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-white dark:text-muted-foreground">
-            {features.map((feat) => (
+            {FEATURES.map((feat) => (
               <div key={feat.title} className="bg-primary dark:bg-accent/40 px-6 py-5 rounded-2xl hover:shadow-lg hover:invert:shadow-primary/20 hover:border invert:hover:border-primary/10">
                 <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
                 <p className="text-sm md:text-base">{feat.desc}</p>
@@ -151,7 +154,7 @@ export const HomeView = () => {
         <section id="faq" className="max-w-4xl mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Frequently Asked Questions</h2>
           <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-accent/40 px-6 sm:px-10 py-8 rounded-2xl">
-            {faqs.map(({ q, a }) => (
+            {FAQS.map(({ q, a }) => (
               <div key={q} className="flex flex-col gap-1">
                 <h3 className="text-sm md:text-base font-medium text-white">{q}</h3>
                 <p>{a}</p>
