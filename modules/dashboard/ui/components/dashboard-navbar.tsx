@@ -37,7 +37,7 @@ export const DashboardNavbar = () => {
         <div className="flex items-center gap-3">
           {/* Desktop: Search bar + Menu button */}
           <Button
-            className="hidden md:flex size-9 border border-border shadow-primary/30 shadow-xs rounded-full"
+            className="hidden md:flex size-9 border border-border shadow-primary/10 shadow-sm rounded-full"
             variant="ghost"
             onClick={toggleSidebar}
           >
@@ -50,7 +50,7 @@ export const DashboardNavbar = () => {
             size="sm"
             className="hidden md:flex h-9 w-60 justify-start font-normal rounded-full"
           >
-            <SearchIcon className="mr-2"  size="16" /> Search
+            <SearchIcon className="mr-2" size="16" /> Search
             <kbd className="ml-auto pointer-events-none inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
               <span className="text-xs">&#8984;</span>K
             </kbd>
@@ -68,7 +68,7 @@ export const DashboardNavbar = () => {
             <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
           </Link>
 
-          <Link href='/' className="md:hidden text-lg font-semibold">Meet<span className="text-green-500">.AI</span></Link>
+          <Link href='/' className="md:hidden text-lg font-semibold">Meet<span className="text-primary font-bold">.AI</span></Link>
         </div>
 
         {/* RIGHT SECTION (Only on Mobile) */}
@@ -79,7 +79,7 @@ export const DashboardNavbar = () => {
             size="sm"
             className="flex h-9 w-30 justify-start font-normal rounded-full text-muted-foreground border-2 bg-background/50"
           >
-            <SearchIcon className="mr-2" size="16"/> Search
+            <SearchIcon className="mr-2" size="16" /> Search
           </Button>
 
           <Button

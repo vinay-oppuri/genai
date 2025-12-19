@@ -9,8 +9,8 @@ import { Separator } from "@/components/ui/separator";
 const pricingCardVariants = cva("rounded-2xl px-6 py-10 w-[90%] mx-auto max-w-md overflow-x-hidden transition-all hover:scale-103 duration-300", {
     variants: {
         variant: {
-            default: "bg-background text-foreground shadow-lg border",
-            highlighted: "bg-linear-to-br from-[#093C23] to-[#051B16] text-white",
+            default: "bg-card text-foreground shadow-xl shadow-primary/5 border hover:shadow-primary/10",
+            highlighted: "bg-primary text-primary-foreground shadow-2xl shadow-primary/20",
         }
     },
     defaultVariants: {
@@ -21,8 +21,8 @@ const pricingCardVariants = cva("rounded-2xl px-6 py-10 w-[90%] mx-auto max-w-md
 const pricingCardIconVariants = cva("size-5", {
     variants: {
         variant: {
-            default: "fill-primary text-white dark:text-green-600",
-            highlighted: "fill-white text-primary dark:text-green-600",
+            default: "fill-primary text-primary-foreground",
+            highlighted: "fill-primary-foreground text-primary",
         }
     },
     defaultVariants: {
@@ -42,8 +42,8 @@ const pricingCardSecondaryTextVariables = cva("text-neutral-700", {
 const pricingCardBadgeVariants = cva("text-black text-xs font-normal p-1", {
     variants: {
         variant: {
-            default: "bg-primary/20",
-            highlighted: "bg-[#F5B797]"
+            default: "bg-primary/10 text-primary border-primary/20",
+            highlighted: "bg-white/20 text-white border-white/30"
         }
     },
     defaultVariants: {
@@ -112,7 +112,7 @@ export const PricingCard = ({
                 <Separator className="text-muted-foreground" />
 
                 <Button
-                    className="w-full text-sm font-medium shadow-lg shadow-primary/40"
+                    className="w-full text-sm font-medium shadow-xl shadow-primary/10"
                     size="lg"
                     variant={variant === "highlighted" ? "default" : "outline"}
                     onClick={onClick}
