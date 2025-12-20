@@ -1,6 +1,7 @@
 "use client"
 
 import { useIsMobile } from "@/hooks/use-mobile"
+import { cn } from "@/lib/utils"
 
 import {
   Dialog,
@@ -24,6 +25,7 @@ interface ResponsiveDialogProps {
   children: React.ReactNode
   open: boolean
   onOpenChange: (open: boolean) => void
+  className?: string
 }
 
 export const ResponsiveDialog = ({
@@ -32,6 +34,7 @@ export const ResponsiveDialog = ({
   children,
   open,
   onOpenChange,
+  className
 }: ResponsiveDialogProps) => {
   const isMobile = useIsMobile()
 
@@ -55,7 +58,7 @@ export const ResponsiveDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md sm:max-w-lg md:max-w-xl rounded-2xl shadow-xl">
+      <DialogContent className={cn("max-w-md sm:max-w-lg md:max-w-xl rounded-2xl shadow-xl", className)}>
         <DialogHeader>
           <DialogTitle className="text-lg font-semibold">{title}</DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 import { Moon, Sun, HomeIcon, BadgeCheckIcon, WalletIcon, HelpCircleIcon, MenuIcon } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -19,8 +19,15 @@ const navItems = [
 export const Sidebar = () => {
     const [open, setOpen] = useState(false)
     const { setTheme, theme } = useTheme()
+    const [mounted, setMounted] = useState(false)
 
     const handleClick = () => setOpen(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) return null
 
     return (
         <Sheet open={open} onOpenChange={setOpen}>
@@ -37,7 +44,7 @@ export const Sidebar = () => {
                         <Image src="/logo.svg" width={36} height={36} alt="Meet.AI" className="drop-shadow-md dark:brightness-125" />
                         <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow pointer-events-none" />
                     </div>
-                    <span className="text-2xl font-bold tracking-tight text-muted dark:text-gray-100">Meet <span className="text-primary">.AI</span></span>
+                    <span className="text-2xl font-bold tracking-tight text-foreground">Meet <span className="text-primary">.AI</span></span>
 
                 </Link>
 

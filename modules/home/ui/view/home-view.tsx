@@ -3,12 +3,15 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { Moon, Sun } from "lucide-react"
+import { ChevronRightIcon, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion";
 import { container, fadeUp, floatY, scaleIn } from "@/lib/animations"
-import dynamic from "next/dynamic";
+import dynamic from "next/dynamic"
+import SignInDialog from "@/modules/auth/ui/components/sign-in-dialog"
+import { useSession } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 const Sidebar = dynamic(() => import("./sidebar").then((m) => m.Sidebar), { ssr: false });
 
 const HEADERS = [
@@ -33,6 +36,9 @@ const FAQS = [
 export const HomeView = () => {
   const { setTheme, theme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { data: session } = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
@@ -42,127 +48,144 @@ export const HomeView = () => {
 
 
   return (
-    <div className="min-h-screen bg-backgroundflex flex-col font-sans relative overflow-x-hidden">
+    <>
+      <SignInDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
+      <div className="min-h-screen bg-backgroundflex flex-col font-sans relative overflow-x-hidden mt-8 md:mt-16">
 
-      <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 px-4 py-3 rounded-full md:rounded-none">
-        <div className="flex items-center justify-between md:mx-auto md:max-w-6xl">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex relative cursor-pointer">
-              <Image
-                src="/logo.svg"
-                height={32}
-                width={32}
-                alt="Meet.AI"
-                className="filter drop-shadow-md brightness-110 dark:brightness-125 ml-2 md:ml-0"
-                priority
-              />
-              <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
-            </Link>
-            <div className="text-foreground text-lg sm:text-xl font-semibold">
-              Meet<span className="text-primary">.AI</span>
+        <header className="fixed top-1 md:top-0 left-1 md:left-0 right-1 md:right-0 md:mx-0 z-50 backdrop-blur-sm border md:border-none bg-background/70 px-4 py-3 md:py-6 rounded-full md:rounded-none">
+          <div className="flex items-center justify-between md:mx-auto md:max-w-6xl">
+            <div className="flex items-center gap-3">
+              <Link href="/" className="flex relative cursor-pointer">
+                <Image
+                  src="/logo.svg"
+                  height={32}
+                  width={32}
+                  alt="Meet.AI"
+                  className="filter drop-shadow-md brightness-110 dark:brightness-125 ml-2 md:ml-0"
+                  priority
+                />
+                <div className="absolute inset-0 bg-primary/50 rounded-full blur-sm animate-pulse-slow ml-2 md:ml-0" />
+              </Link>
+              <div className="text-foreground text-lg sm:text-xl font-semibold">
+                Meet<span className="text-primary">.AI</span>
+              </div>
+            </div>
+
+
+
+            <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-5 py-3">
+              {HEADERS.map((item) => (
+                <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform duration-200">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-2 text-foreground">
+              <Button onClick={() => {
+                if (session) {
+                  router.push("/dashboard")
+                } else {
+                  setIsDialogOpen(true)
+                }
+              }} className="text-white/80 rounded-full hover:scale-105 transition-transform duration-200">
+                {session ? "Dashboard" : "Try it Now"} <ChevronRightIcon className="ml-2"/>
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="hidden md:flex"
+              >
+                {theme === "dark" ? <Sun className="text-yellow-400" /> : <Moon className="text-blue-500" />}
+              </Button>
+
+              <div className="flex md:hidden"><Sidebar /></div>
             </div>
           </div>
+        </header>
 
 
 
-          <nav className="hidden md:flex items-center gap-5 text-sm font-medium border rounded-lg px-5 py-3">
-            {HEADERS.map((item) => (
-              <Link key={item.href} href={item.href} className="text-foreground hover:scale-105 transition-transform duration-200">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+        <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative z-10">
+          <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-4 py-8 gap-12 md:gap-8 overflow-hidden">
 
-          <div className="flex items-center gap-2 text-foreground">
-            <Link href="/sign-in">
-              <Button className="rounded-full text-sm px-4 py-2 backdrop-blur-xs">
-                Get Started
-              </Button>
-            </Link>
+            <motion.div variants={container} initial="hidden" animate="show" className="flex-1 text-center md:text-left space-y-4 sm:space-y-6" >
+              <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg will-change-transform">
+                Run Smarter Meetings with{" "}
+                <span className="text-primary animate-pulse">AI Agents</span>
+              </motion.h1>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="hidden md:flex"
-            >
-              {theme === "dark" ? <Sun className="text-yellow-400" /> : <Moon className="text-blue-500" />}
-            </Button>
+              <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0 will-change-transform">
+                Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
+              </motion.p>
 
-            <div className="flex md:hidden"><Sidebar /></div>
-          </div>
-        </div>
-      </header>
-
-
-
-      <main className="flex-1 flex flex-col items-center justify-center pt-28 pb-12 px-4 sm:px-6 lg:px-8 relative z-10">
-        <section id="home" className="max-w-7xl w-full mx-auto flex flex-col-reverse md:flex-row items-center justify-between px-4 py-8 gap-12 md:gap-8 overflow-hidden">
-
-          <motion.div variants={container} initial="hidden" animate="show" className="flex-1 text-center md:text-left space-y-4 sm:space-y-6" >
-            <motion.h1 variants={fadeUp} className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-foreground drop-shadow-lg will-change-transform">
-              Run Smarter Meetings with{" "}
-              <span className="text-primary animate-pulse">AI Agents</span>
-            </motion.h1>
-
-            <motion.p variants={fadeUp} className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto md:mx-0 my-6 md:my-0 will-change-transform">
-              Create intelligent agents, assign them to meetings, and automate your decision workflows. Let AI handle summaries, notes, and action items.
-            </motion.p>
-
-            <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start" >
-              <Link href="/sign-up">
-                <Button className="bg-primary text-background font-semibold p-5 rounded-full">
-                  Create your first meeting
+              <motion.div variants={fadeUp} className="pt-4 flex flex-col sm:flex-row gap-4 items-center justify-center md:justify-start" >
+                <Button onClick={() => {
+                  if (session) {
+                    router.push("/dashboard")
+                  } else {
+                    setIsDialogOpen(true)
+                  }
+                }} className="text-white/80 rounded-full px-8 py-5 hover:scale-105 transition-transform duration-200">
+                  <p>Create your first meeting</p>
                 </Button>
-              </Link>
-              <Link href="/sign-in">
-                <Button variant="outline" className="border-primary p-5 text-primary rounded-full w-25">
-                  Login
+                {/* ######################################### */}
+                <Button onClick={() => {
+                  if (session) {
+                    router.push("/dashboard")
+                  } else {
+                    setIsDialogOpen(true)
+                  }
+                }} variant="outline" className="text-primary rounded-full px-8 py-5 hover:scale-105 transition-transform duration-200">
+                  <p>Login</p>
                 </Button>
-              </Link>
+
+              </motion.div>
             </motion.div>
-          </motion.div>
 
-          {/* Right Side Image */}
-          <motion.div variants={scaleIn} initial="hidden" animate="show" className="hidden md:flex flex-1 w-full justify-center md:justify-end">
-            <motion.div {...floatY(10, 5)} className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
-              <Image
-                src="/agent.jpg"
-                alt="Agent"
-                layout="fill"
-                objectFit="contain"
-                className="rounded-full brightness-75 contrast-125 saturate-150 drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]"
-                priority
-              />
+            {/* Right Side Image */}
+            <motion.div variants={scaleIn} initial="hidden" animate="show" className="hidden md:flex flex-1 w-full justify-center md:justify-end">
+              <motion.div {...floatY(10, 5)} className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[400px] md:h-[400px]">
+                <Image
+                  src="/agent.jpg"
+                  alt="Agent"
+                  layout="fill"
+                  objectFit="contain"
+                  className="rounded-full brightness-75 contrast-125 saturate-150 drop-shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+                  priority
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </section>
+          </section>
 
 
-        <section id="features" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-white dark:text-muted-foreground">
-            {FEATURES.map((feat) => (
-              <div key={feat.title} className="bg-primary dark:bg-accent/40 px-6 py-5 rounded-2xl hover:shadow-lg hover:invert:shadow-primary/20 hover:border invert:hover:border-primary/10">
-                <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
-                <p className="text-sm md:text-base">{feat.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+          <section id="features" className="max-w-6xl w-full mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Features</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center text-white dark:text-muted-foreground">
+              {FEATURES.map((feat) => (
+                <div key={feat.title} className="bg-primary dark:bg-accent/40 px-6 py-5 rounded-2xl hover:shadow-lg hover:invert:shadow-primary/20 hover:border invert:hover:border-primary/10">
+                  <h3 className="font-semibold text-white mb-2 text-sm md:text-lg">{feat.title}</h3>
+                  <p className="text-sm md:text-base">{feat.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-        <section id="faq" className="max-w-4xl mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Frequently Asked Questions</h2>
-          <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-accent/40 px-6 sm:px-10 py-8 rounded-2xl">
-            {FAQS.map(({ q, a }) => (
-              <div key={q} className="flex flex-col gap-1">
-                <h3 className="text-sm md:text-base font-medium text-white">{q}</h3>
-                <p>{a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
+          <section id="faq" className="max-w-4xl mx-auto py-12 md:py-16 px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-foreground mb-6 md:mb-12">Frequently Asked Questions</h2>
+            <div className="space-y-6 text-sm md:text-base text-white dark:text-muted-foreground bg-primary dark:bg-accent/40 px-6 sm:px-10 py-8 rounded-2xl">
+              {FAQS.map(({ q, a }) => (
+                <div key={q} className="flex flex-col gap-1">
+                  <h3 className="text-sm md:text-base font-medium text-white">{q}</h3>
+                  <p>{a}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </main>
+      </div>
+    </>
   )
 }
